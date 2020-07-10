@@ -10,8 +10,9 @@ class LoginPage extends StatelessWidget {
     );
   }
 
-  Widget createFormField(String hintText) {
+  Widget createFormField(String hintText, bool isPassword) {
     return TextFormField(
+      obscureText: isPassword,
       decoration: InputDecoration(hintText: hintText),
     );
   }
@@ -32,21 +33,24 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        padding: EdgeInsets.symmetric(horizontal: 48),
-        decoration: BoxDecoration(color: Color.fromRGBO(255, 251, 193, 1.0)),
-        child: ListView(children: [
-          Image.asset(
-            'assets/images/logo.png',
-            width: 96,
-            height: 96,
-          ),
-          createLabel(41, 'USUARIO'),
-          createFormField('usuario@ejemplo.com'),
-          createLabel(15, 'CONTRASEÑA'),
-          createFormField('Contraseña'),
-          createLoginButton(),
-        ]),
-      ),
+          padding: EdgeInsets.symmetric(horizontal: 48),
+          decoration: BoxDecoration(color: Color.fromRGBO(255, 251, 193, 1.0)),
+          child: Center(
+              child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Image.asset(
+                'assets/images/logo.png',
+                width: 96,
+                height: 96,
+              ),
+              createLabel(41, 'USUARIO'),
+              createFormField('usuario@ejemplo.com', false),
+              createLabel(15, 'CONTRASEÑA'),
+              createFormField('Contraseña', true),
+              createLoginButton(),
+            ],
+          ))),
     );
   }
 }

@@ -1,6 +1,7 @@
 import 'package:bikecourier_app/login_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'home_page.dart';
 
@@ -10,7 +11,7 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
-  String _email, _password;
+  String _email, _password, _name, _parentLastName, _maternalLastName;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   Widget createLabel(double padding, String label) {
@@ -35,6 +36,45 @@ class _SignUpPageState extends State<SignUpPage> {
     );
   }
 
+  Widget createParentLastNameFormField(String hintText, bool isPassword) {
+    return TextFormField(
+      validator: (input) {
+        if (input.isEmpty) {
+          return 'Please type some lastname';
+        }
+      },
+      onSaved: (input) => _parentLastName = input,
+      obscureText: isPassword,
+      decoration: InputDecoration(hintText: hintText),
+    );
+  }
+
+  Widget createMotherLastNameFormField(String hintText, bool isPassword) {
+    return TextFormField(
+      validator: (input) {
+        if (input.isEmpty) {
+          return 'Please type some lastname';
+        }
+      },
+      onSaved: (input) => _maternalLastName = input,
+      obscureText: isPassword,
+      decoration: InputDecoration(hintText: hintText),
+    );
+  }
+
+  Widget createNameFormField(String hintText, bool isPassword) {
+    return TextFormField(
+      validator: (input) {
+        if (input.isEmpty) {
+          return 'Please type some name';
+        }
+      },
+      onSaved: (input) => _name = input,
+      obscureText: isPassword,
+      decoration: InputDecoration(hintText: hintText),
+    );
+  }
+
   Widget createPasswordFormField(String hintText, bool isPassword) {
     return TextFormField(
       validator: (input) {
@@ -50,12 +90,26 @@ class _SignUpPageState extends State<SignUpPage> {
 
   Widget createRegisterButton() {
     return Container(
+      width: MediaQuery.of(context).size.width / 2,
       padding: const EdgeInsets.only(top: 15),
       child: RaisedButton(
         color: Colors.black,
         textColor: Colors.white,
         child: Text('REGISTRARSE'),
         onPressed: signUp,
+      ),
+    );
+  }
+
+  Widget createCancelButton() {
+    return Container(
+      width: MediaQuery.of(context).size.width / 2,
+      padding: const EdgeInsets.only(top: 15),
+      child: RaisedButton(
+        color: Colors.black,
+        textColor: Colors.white,
+        child: Text('CANCELAR'),
+        onPressed: () => Navigator.pop(context, false),
       ),
     );
   }
@@ -70,21 +124,30 @@ class _SignUpPageState extends State<SignUpPage> {
               decoration:
                   BoxDecoration(color: Color.fromRGBO(255, 251, 193, 1.0)),
               child: Center(
-                  child: Column(
+                  child: SingleChildScrollView(
+                                      child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  Image.asset(
-                    'assets/images/logo.png',
-                    width: 96,
-                    height: 96,
-                  ),
-                  createLabel(41, 'USUARIO'),
-                  createEmailFormField('usuario@ejemplo.com', false),
-                  createLabel(15, 'CONTRASEÑA'),
-                  createPasswordFormField('Contraseña', true),
-                  createRegisterButton(),
+                    Image.asset(
+                      'assets/images/logo.png',
+                      width: 96,
+                      height: 96,
+                    ),
+                    createLabel(41, 'USUARIO'),
+                    createEmailFormField('usuario@ejemplo.com', false),
+                    createLabel(15, 'CONTRASEÑA'),
+                    createPasswordFormField('Contraseña', true),
+                    createLabel(15, 'NOMBRE'),
+                    createNameFormField('Nombre', false),
+                    createLabel(15, 'APELLIDO PATERNO'),
+                    createParentLastNameFormField('Apellido Paterno', false),
+                    createLabel(15, 'APELLIDO MATERNO'),
+                    createMotherLastNameFormField('Apellido Materno', false),
+                    createRegisterButton(),
+                    createCancelButton()
                 ],
-              )))),
+              ),
+                  )))),
     );
   }
 
@@ -96,8 +159,14 @@ class _SignUpPageState extends State<SignUpPage> {
                 .createUserWithEmailAndPassword(
                     email: _email.trim(), password: _password.trim()))
             .user;
+        Firestore.instance.collection('users').document(user.uid).setData({
+          'uid': user.uid,
+          'email': user.email,
+          'name': _name,
+          'parentLastName': _parentLastName.trim(),
+          'maternalLastName': _maternalLastName.trim(),
+        });
         user.sendEmailVerification();
-        Navigator.of(context).pop();
         Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (context) => LoginPage()));
       } catch (e) {

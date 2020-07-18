@@ -1,6 +1,7 @@
 import 'package:bikecourier_app/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -8,11 +9,9 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  
   String _email, _password;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  
-  
+
   Widget createLabel(double padding, String label) {
     return Padding(
       padding: EdgeInsets.only(top: padding),
@@ -26,7 +25,7 @@ class _LoginPageState extends State<LoginPage> {
     return TextFormField(
       validator: (input) {
         if (input.isEmpty) {
-          return 'Please type some email'; 
+          return 'Please type some email';
         }
       },
       onSaved: (input) => _email = input,
@@ -36,10 +35,10 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Widget createPasswordFormField(String hintText, bool isPassword) {
-      return TextFormField(
+    return TextFormField(
       validator: (input) {
         if (input.isEmpty) {
-          return 'Please type some password'; 
+          return 'Please type some password';
         }
       },
       onSaved: (input) => _password = input,
@@ -50,6 +49,7 @@ class _LoginPageState extends State<LoginPage> {
 
   Widget createLoginButton() {
     return Container(
+      width: MediaQuery.of(context).size.width / 2,
       padding: const EdgeInsets.only(top: 15),
       child: RaisedButton(
         color: Colors.black,
@@ -64,7 +64,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Form(
-        key: _formKey,
+          key: _formKey,
           child: Container(
               padding: EdgeInsets.symmetric(horizontal: 48),
               decoration:
@@ -92,12 +92,43 @@ class _LoginPageState extends State<LoginPage> {
     if (_formKey.currentState.validate()) {
       _formKey.currentState.save();
       try {
-        print(_email);
-        FirebaseUser user = (await FirebaseAuth.instance.signInWithEmailAndPassword(email: _email.trim(), password: _password.trim())).user;
-        Navigator.push(context, MaterialPageRoute(builder:  (context) => Home()));      
+        FirebaseUser user = (await FirebaseAuth.instance
+                .signInWithEmailAndPassword(
+                    email: _email.trim(), password: _password.trim()))
+            .user;
+        if (user.isEmailVerified) {
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => Home(user: user)));
+        } else {
+          print('not Vetified');
+          _showDialog();
+        }
       } catch (e) {
         print(e.message);
       }
     }
+  }
+
+  void _showDialog() {
+    // flutter defined function
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return AlertDialog(
+          title: new Text("Email no verificado"),
+          content: new Text("Porfavor verifica tu correo."),
+          actions: <Widget>[
+            // usually buttons at the bottom of the dialog
+            new FlatButton(
+              child: new Text("Close"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 }

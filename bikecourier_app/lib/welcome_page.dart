@@ -24,17 +24,23 @@ class _WelcomePageState extends State<WelcomePage> {
                 width: 96,
                 height: 96,
               ),
-              RaisedButton(
-                color: Colors.black,
-                textColor: Colors.white,
-                child: Text('INGRESAR'),
-                onPressed: navigateToSignIn,
+              Container(
+                width: MediaQuery.of(context).size.width / 2,
+                child: RaisedButton(
+                  color: Colors.black,
+                  textColor: Colors.white,
+                  child: Text('INGRESAR'),
+                  onPressed: navigateToSignIn,
+                ),
               ),
-              RaisedButton(
-                color: Colors.black,
-                textColor: Colors.white,
-                child: Text('REGISTRARSE'),
-                onPressed: navigateToSignUp,
+              Container(
+                width: MediaQuery.of(context).size.width / 2,
+                child: RaisedButton(
+                  color: Colors.black,
+                  textColor: Colors.white,
+                  child: Text('REGISTRARSE'),
+                  onPressed: navigateToSignUp,
+                ),
               ),
             ],
           ),

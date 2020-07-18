@@ -1,6 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {
+  final FirebaseUser user;
+
+  const Home({Key key, this.user}) : super(key: key);
   @override
   _HomeState createState() => _HomeState();
 }
@@ -47,12 +51,12 @@ class _HomeState extends State<Home> {
       appBar: AppBar(
         iconTheme: new IconThemeData(color: Colors.black),
         backgroundColor: Color.fromRGBO(255, 251, 193, 1.0),
-        title: Text('Welcome',
+        title: Text('Welcome ${widget.user.email}',
             style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 20.0,
                 color: Colors.black),
-            textAlign: TextAlign.center),
+            ),
       ),
     );
   }

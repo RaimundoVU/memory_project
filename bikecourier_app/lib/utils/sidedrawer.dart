@@ -1,16 +1,17 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class Home extends StatefulWidget {
+class SideDrawer extends StatefulWidget {
   final FirebaseUser user;
 
-  const Home({Key key, this.user}) : super(key: key);
+  const SideDrawer({Key key, this.user}) : super(key: key);
   @override
-  _HomeState createState() => _HomeState();
+  _SideDrawerState createState() => _SideDrawerState();
 }
 
-class _HomeState extends State<Home> {
-  Widget createSideDrawer() {
+class _SideDrawerState extends State<SideDrawer> {
+  @override
+  Widget build(BuildContext context) {
     return Drawer(
       // Add a ListView to the drawer. This ensures the user can scroll
       // through the options in the drawer if there isn't enough vertical
@@ -40,23 +41,6 @@ class _HomeState extends State<Home> {
             },
           ),
         ],
-      ),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      drawer: createSideDrawer(),
-      appBar: AppBar(
-        iconTheme: new IconThemeData(color: Colors.black),
-        backgroundColor: Color.fromRGBO(255, 251, 193, 1.0),
-        title: Text('Welcome ${widget.user.email}',
-            style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 20.0,
-                color: Colors.black),
-            ),
       ),
     );
   }

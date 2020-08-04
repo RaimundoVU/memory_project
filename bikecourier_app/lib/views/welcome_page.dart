@@ -1,5 +1,5 @@
-import 'package:bikecourier_app/login_page.dart';
-import 'package:bikecourier_app/signup_page.dart';
+import 'package:bikecourier_app/setup/login_page.dart';
+import 'package:bikecourier_app/setup/signup_page.dart';
 import 'package:flutter/material.dart';
 
 class WelcomePage extends StatefulWidget {

@@ -1,6 +1,6 @@
-import 'package:bikecourier_app/welcome_page.dart';
+import 'package:bikecourier_app/views/welcome_page.dart';
 import 'package:flutter/material.dart';
-import 'login_page.dart';
+import 'setup/login_page.dart';
 void main() {
   runApp(MyApp());
 }

@@ -1,4 +1,4 @@
-import 'package:bikecourier_app/home_page.dart';
+import 'package:bikecourier_app/setup/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -97,8 +97,14 @@ class _LoginPageState extends State<LoginPage> {
                     email: _email.trim(), password: _password.trim()))
             .user;
         if (user.isEmailVerified) {
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => Home(user: user)));
+          String userName;
+          final DocumentReference document =
+              Firestore.instance.collection("users").document(user.uid);
+          await document.get().then<dynamic>((DocumentSnapshot snapshot) async {
+            userName = snapshot.data['name'];
+          });
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => Home(user: user, userName: userName)));
         } else {
           print('not Vetified');
           _showDialog();

@@ -19,8 +19,8 @@ class _HomeState extends State<Home> {
     return Card(
         child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
       const ListTile(
-        leading: Icon(Icons.album),
-        title: Text('Realizar envío'),
+        leading: Icon(Icons.drafts, color: Colors.black),
+        title: Text('Realizar envío', style: TextStyle(fontWeight: FontWeight.bold),),
       ),
       Image.asset('assets/images/maps_photo.png', height: 140, width: 340),
       Container(
@@ -30,7 +30,7 @@ class _HomeState extends State<Home> {
       ButtonBar(
         children: <Widget>[
           FlatButton(
-            child: const Text('CONTINUAR'),
+            child: const Text('CONTINUAR', style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
             onPressed: goToClientMain,
           ),
         ],
@@ -42,8 +42,8 @@ class _HomeState extends State<Home> {
     return Card(
         child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
       const ListTile(
-        leading: Icon(Icons.album),
-        title: Text('Ser mensajero'),
+        leading: Icon(Icons.directions_bike, color: Colors.black),
+        title: Text('Ser mensajero', style: TextStyle(fontWeight: FontWeight.bold)),
       ),
       Image.asset(
         'assets/images/bikemessenger-photo.jpg',
@@ -56,7 +56,7 @@ class _HomeState extends State<Home> {
       ButtonBar(
         children: <Widget>[
           FlatButton(
-            child: const Text('CONTINUAR'),
+            child: const Text('CONTINUAR', style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
             onPressed: goToMessengerMain,
           ),
         ],

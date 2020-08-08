@@ -21,20 +21,22 @@ class _SideDrawerState extends State<SideDrawer> {
         padding: EdgeInsets.zero,
         children: <Widget>[
           DrawerHeader(
-            child: Text('Drawer Header'),
+            child: Text('TEST', style: TextStyle(color: Colors.white)),
             decoration: BoxDecoration(
               color: Colors.black,
             ),
           ),
           ListTile(
-            title: Text('Item 1'),
+            leading: Icon(Icons.settings),
+            title: Text('Configuración'),
             onTap: () {
               // Update the state of the app.
               // ...
             },
           ),
           ListTile(
-            title: Text('Item 2'),
+            leading: Icon(Icons.power_settings_new),
+            title: Text('Cerrar Sesión'),
             onTap: () {
               // Update the state of the app.
               // ...

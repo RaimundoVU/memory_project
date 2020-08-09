@@ -5,6 +5,8 @@ import 'package:bikecourier_app/utils/sidedrawer.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import 'origin_location.dart';
+
 class ClientOrder extends StatefulWidget {
   final FirebaseUser user;
   final String userName;
@@ -19,25 +21,11 @@ class _ClientOrderState extends State<ClientOrder> {
   int _currentStep = 0;
   bool completeStep = false;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  static var _focusNodeDirection = new FocusNode();
   static var _focusNodeEnd = new FocusNode();
-  static Direction directionData = new Direction();
-  static DeliveryObject objectData = new DeliveryObject();
+  Direction directionData = new Direction();
+  DeliveryObject objectData = new DeliveryObject();
 
   List<Step> steps;
-
-  @override
-  void initState() {
-    super.initState();
-    _focusNodeDirection.addListener(() {
-      setState(() {});
-      print('Has focus: $_focusNodeDirection.hasFocus');
-    });
-    _focusNodeEnd.addListener(() {
-      setState(() {});
-      print('Has focus: $_focusNodeEnd.hasFocus');
-    });
-  }
 
   void _submitDetails() {
     final FormState formState = _formKey.currentState;
@@ -73,20 +61,6 @@ class _ClientOrderState extends State<ClientOrder> {
     }
   }
 
-  Widget createDirectionInput() {
-    return TextFormField(
-      focusNode: _focusNodeDirection,
-      validator: (input) {
-        if (input.isEmpty) {
-          return 'Porfavor, escribe una dirección';
-        }
-      },
-      onSaved: (String input) => directionData.originLocation = input,
-      obscureText: false,
-      decoration: InputDecoration(hintText: "Dirección de origen"),
-    );
-  }
-
   Widget createEndDirectionInput() {
     return TextFormField(
       focusNode: _focusNodeEnd,
@@ -101,71 +75,22 @@ class _ClientOrderState extends State<ClientOrder> {
     );
   }
 
-  Widget createObjectTypeMenu() {
-    List<String> objectTypes = <String>[
-      "Llaves",
-      "Cuadernos",
-      "Comida",
-      "Herramientas",
-    ];
-    print(objectTypes);
-    return DropdownButton(
-      hint: Text("Tipo de objeto"),
-      value: objectData.objectType,
-      items: objectTypes.map<DropdownMenuItem<String>>((String value) {
-        return DropdownMenuItem<String>(value: value, child: Text(value));
-      }).toList(),
-      onChanged: (String newValue) {
-        setState(() {
-          objectData.objectType = newValue;
-        });
-      },
+  Widget createOriginLocation() {
+    return Expanded(
+      child: Card(
+          child: ListTile(
+        title: Text('Dirección de origen'),
+        subtitle: Text(this.directionData.originLocation),
+      )),
     );
-  }
-
-  nextStep() {
-    _currentStep + 1 != steps.length ? goTo(_currentStep + 1) : _submitDetails();
-  }
-
-  goTo(int step) {
-    setState(() => _currentStep = step);
-  }
-
-  cancel() {
-    if (_currentStep > 0) {
-      goTo(_currentStep - 1);
-    }
-  }
-
-  Widget createStepper() {
-    steps = <Step>[
-      Step(
-          title: Text("Dirección"),
-          content: Column(
-            children: <Widget>[
-              createDirectionInput(),
-              createEndDirectionInput()
-            ],
-          )),
-      Step(
-          title: Text("Objetos"),
-          content: Column(
-            children: <Widget>[createObjectTypeMenu()],
-          )),
-    ];
-
-    return Stepper(
-        steps: steps,
-        currentStep: _currentStep,
-        onStepContinue: nextStep,
-        onStepCancel: cancel,
-        onStepTapped: (step) => goTo(step));
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: CustomAppBar(user: widget.user, userName: widget.userName),
+        appBar: AppBar(
+            iconTheme: new IconThemeData(color: Colors.black),
+            backgroundColor: Color.fromRGBO(255, 251, 193, 1.0)),
         drawer: SideDrawer(user: widget.user),
         body: Form(
           key: _formKey,
@@ -173,17 +98,57 @@ class _ClientOrderState extends State<ClientOrder> {
               padding: EdgeInsets.symmetric(horizontal: 35),
               child: Column(
                 children: <Widget>[
-                  createStepper(),
-                  // new RaisedButton(
-                  //   child: new Text(
-                  //     'Save details',
-                  //     style: new TextStyle(color: Colors.white),
-                  //   ),
-                  //   onPressed: _submitDetails,
-                  //   color: Colors.blue,
-                  // ),
+                  Text(
+                    'Realizar envío',
+                    textAlign: TextAlign.left,
+                    style:
+                        TextStyle(fontWeight: FontWeight.bold, fontSize: 20.00),
+                  ),
+                  Divider(
+                    color: Colors.black,
+                    thickness: 1,
+                  ),
+                  Row(
+                    children: [
+                      createOriginLocation(),
+                      FlatButton(
+                        onPressed: () {
+                          _awaitForOriginLocation(context);
+                        },
+                        child: Text('Editar'),
+                      ),
+                    ],
+                  ),
+                  Divider(
+                    color: Colors.black,
+                    thickness: 1,
+                  ),
+                  RaisedButton(
+                      child: Text(
+                        'Enviar encomienda',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      color: Colors.black,
+                      onPressed: _submitDetails)
                 ],
               )),
         ));
+  }
+
+  void _awaitForOriginLocation(BuildContext context) async {
+    final result = await Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => OriginLocation(
+            user: widget.user,
+            defaultLocation: directionData.originLocation,
+          ),
+        ));
+
+    setState(() {
+      directionData.originLocation = result;
+    });
+
+    print(directionData);
   }
 }

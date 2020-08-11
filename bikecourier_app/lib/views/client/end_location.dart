@@ -1,53 +1,52 @@
 import 'package:bikecourier_app/models/Direction.dart';
 import 'package:bikecourier_app/utils/sidedrawer.dart';
-import 'package:bikecourier_app/views/client/confirm_location.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class OriginLocation extends StatefulWidget {
+import 'confirm_location.dart';
+
+class EndLocation extends StatefulWidget {
   final FirebaseUser user;
   final Direction defaultLocation;
-  OriginLocation({Key key, this.user, this.defaultLocation});
+  EndLocation({Key key, this.user, this.defaultLocation});
   @override
-  _OriginLocationState createState() => _OriginLocationState();
+  _EndLocationState createState() => _EndLocationState();
 }
 
-class _OriginLocationState extends State<OriginLocation> {
-  // static var _focusNodeDirection = new FocusNode();
+class _EndLocationState extends State<EndLocation> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  String _originLocation;
-  String _originNotes;
-
+  String _endLocation;
+  String _endNotes;
 
   Widget createDirectionInput() {
     return TextFormField(
       // focusNode: _focusNodeDirection,
-      initialValue: widget.defaultLocation.originLocation,
+      initialValue: widget.defaultLocation.endLocation,
       validator: (input) {
         if (input.isEmpty) {
           return 'Porfavor, escribe una dirección';
         }
       },
-      onSaved: (input) => _originLocation = input,
+      onSaved: (input) => _endLocation = input,
       obscureText: false,
       decoration: InputDecoration(
           labelText: 'Dirección',
           labelStyle: TextStyle(color: Colors.black),
-          hintText: "Dirección de origen"),
+          hintText: "Dirección de destino"),
     );
   }
 
   Widget createNotesInput() {
     return TextFormField(
       // focusNode: _focusNodeDirection,
-      initialValue: widget.defaultLocation.originNotes,
+      initialValue: widget.defaultLocation.endNotes,
       validator: (input) {
         if (input.isEmpty) {
           return 'Porfavor, escribe notas';
         }
       },
-      onSaved: (input) => _originNotes = input,
+      onSaved: (input) => _endNotes = input,
       obscureText: false,
       decoration: InputDecoration(
           labelText: 'Notas',
@@ -91,19 +90,19 @@ class _OriginLocationState extends State<OriginLocation> {
     if (_formKey.currentState.validate()) {
       final result = await Navigator.push(context, 
       MaterialPageRoute(
-        builder: (context) => ConfirmLocation(user: widget.user, type: "origin"),
+        builder: (context) => ConfirmLocation(user: widget.user, type: "end"),
       ));
       _formKey.currentState.save();
       print(result);
       setState(() {
-        widget.defaultLocation.originLat = result.latitude;
-        widget.defaultLocation.originLng = result.longitude;
-        widget.defaultLocation.originNotes = this._originNotes;
-        widget.defaultLocation.originLocation = this._originLocation;
+        widget.defaultLocation.endLat = result.latitude;
+        widget.defaultLocation.endLng = result.longitude;
+        widget.defaultLocation.endNotes = this._endNotes;
+        widget.defaultLocation.endLocation = this._endLocation;
       });
       Navigator.pop(context, widget.defaultLocation);
     } else {
-      Navigator.pop(context, this._originLocation);
+      Navigator.pop(context, this._endLocation);
     }
   }
 }

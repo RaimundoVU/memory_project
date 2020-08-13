@@ -1,140 +1,65 @@
-import 'package:bikecourier_app/setup/home_page.dart';
+import 'package:bikecourier_app/viewmodels/login_page_model.dart';
+import 'package:bikecourier_app/shared/ui_helpers.dart';
+import 'package:bikecourier_app/widgets/busy_button.dart';
+import 'package:bikecourier_app/widgets/input_field.dart';
+import 'package:bikecourier_app/widgets/text_link.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:provider_architecture/provider_architecture.dart';
 
-class LoginPage extends StatefulWidget {
-  @override
-  _LoginPageState createState() => new _LoginPageState();
-}
-
-class _LoginPageState extends State<LoginPage> {
-  String _email, _password;
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
-  Widget createLabel(double padding, String label) {
-    return Padding(
-      padding: EdgeInsets.only(top: padding),
-      child: Text(label,
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
-          textAlign: TextAlign.center),
-    );
-  }
-
-  Widget createEmailFormField(String hintText, bool isPassword) {
-    return TextFormField(
-      validator: (input) {
-        if (input.isEmpty) {
-          return 'Please type some email';
-        }
-      },
-      onSaved: (input) => _email = input,
-      obscureText: isPassword,
-      decoration: InputDecoration(hintText: hintText),
-    );
-  }
-
-  Widget createPasswordFormField(String hintText, bool isPassword) {
-    return TextFormField(
-      validator: (input) {
-        if (input.isEmpty) {
-          return 'Please type some password';
-        }
-      },
-      onSaved: (input) => _password = input,
-      obscureText: isPassword,
-      decoration: InputDecoration(hintText: hintText),
-    );
-  }
-
-  Widget createLoginButton() {
-    return Container(
-      width: MediaQuery.of(context).size.width / 2,
-      padding: const EdgeInsets.only(top: 15),
-      child: RaisedButton(
-        color: Colors.black,
-        textColor: Colors.white,
-        child: Text('INGRESAR'),
-        onPressed: signIn,
-      ),
-    );
-  }
+class LoginPage extends StatelessWidget {
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Form(
-          key: _formKey,
-          child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 48),
-              decoration:
-                  BoxDecoration(color: Color.fromRGBO(255, 251, 193, 1.0)),
-              child: Center(
-                  child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+    return ViewModelProvider<LoginPageModel>.withConsumer(
+        viewModel: LoginPageModel(),
+        builder: (context, model, chilld) => Scaffold(
+            backgroundColor: Color.fromRGBO(255, 251, 193, 1.0),
+            body: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 50),
+              child: Column(
                 children: <Widget>[
-                  Image.asset(
-                    'assets/images/logo.png',
-                    width: 96,
-                    height: 96,
+                  SizedBox(
+                    height: 150,
+                    child: Image.asset('assets/images/logo.png'),
                   ),
-                  createLabel(41, 'USUARIO'),
-                  createEmailFormField('usuario@ejemplo.com', false),
-                  createLabel(15, 'CONTRASEÑA'),
-                  createPasswordFormField('Contraseña', true),
-                  createLoginButton(),
+                  InputField(
+                    placeholder: 'Correo',
+                    controller: emailController,
+                  ),
+                  verticalSpaceSmall,
+                  InputField(
+                    placeholder: 'Contraseña',
+                    password: true,
+                    controller: passwordController,
+                  ),
+                  verticalSpaceMedium,
+                  Row(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      BusyButton(
+                        title: 'Ingresar',
+                        busy: model.busy,
+                        onPressed: () {
+                          model.login(
+                            email: emailController.text,
+                            password: passwordController.text,
+                          );
+                        },
+                      ),
+                    ],
+                  ),
+                  verticalSpaceMedium,
+                  TextLink(
+                    'Crear una cuenta.',
+                    onPressed: () {
+                      model.navigateToSignUp();
+                    },
+                  )
                 ],
-              )))),
-    );
-  }
-
-  Future<void> signIn() async {
-    if (_formKey.currentState.validate()) {
-      _formKey.currentState.save();
-      try {
-        FirebaseUser user = (await FirebaseAuth.instance
-                .signInWithEmailAndPassword(
-                    email: _email.trim(), password: _password.trim()))
-            .user;
-        if (user.isEmailVerified) {
-          String userName;
-          final DocumentReference document =
-              Firestore.instance.collection("users").document(user.uid);
-          await document.get().then<dynamic>((DocumentSnapshot snapshot) async {
-            userName = snapshot.data['name'];
-          });
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => Home(user: user, userName: userName)));
-        } else {
-          print('not Vetified');
-          _showDialog();
-        }
-      } catch (e) {
-        print(e.message);
-      }
-    }
-  }
-
-  void _showDialog() {
-    // flutter defined function
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        // return object of type Dialog
-        return AlertDialog(
-          title: new Text("Email no verificado"),
-          content: new Text("Porfavor verifica tu correo."),
-          actions: <Widget>[
-            // usually buttons at the bottom of the dialog
-            new FlatButton(
-              child: new Text("Close"),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
+              ),
+            )));
   }
 }

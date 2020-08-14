@@ -1,5 +1,4 @@
 import 'dart:math';
-
 import 'package:bikecourier_app/shared/ui_helpers.dart';
 import 'package:bikecourier_app/viewmodels/signup_view_model.dart';
 import 'package:bikecourier_app/widgets/busy_button.dart';
@@ -7,16 +6,18 @@ import 'package:bikecourier_app/widgets/input_field.dart';
 import 'package:flutter/material.dart';
 import 'package:provider_architecture/viewmodel_provider.dart';
 
-class SignUpPage extends StatelessWidget {
+class SignUpView extends StatelessWidget {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
+  final fullNameController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
-    return ViewModelProvider<SignUpPageModel>.withConsumer(
-      viewModel: SignUpPageModel(),
+    return ViewModelProvider<SignUpViewModel>.withConsumer(
+      viewModel: SignUpViewModel(),
       builder: (context, model, child) => Scaffold(
-        backgroundColor: Color.fromRGBO(255, 251, 193, 1.0),
+        backgroundColor: Colors.white,
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 50.0),
           child: Column(
@@ -31,7 +32,11 @@ class SignUpPage extends StatelessWidget {
                 ),
               ),
               verticalSpaceLarge,
-              // TODO: Add additional user data here to save (episode 2)
+              InputField(
+                placeholder: 'Nombre completo',
+                controller: fullNameController,
+              ),
+              verticalSpaceSmall,
               InputField(
                 placeholder: 'Correo',
                 controller: emailController,
@@ -60,9 +65,10 @@ class SignUpPage extends StatelessWidget {
                     busy: model.busy,
                     onPressed: () {
                       model.signUp(
-                        email: emailController.text,
+                        email: emailController.text.trim(),
                         password: passwordController.text,
                         confirmPassword: confirmPasswordController.text,
+                        fullName: fullNameController.text,
                       );
                     },
                   )

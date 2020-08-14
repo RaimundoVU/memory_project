@@ -7,7 +7,7 @@ import 'package:flutter/foundation.dart';
 import '../locator.dart';
 import 'base_model.dart';
 
-class LoginPageModel extends BaseModel {
+class LoginViewModel extends BaseModel {
   final AuthenticationService _authenticationService =
       locator<AuthenticationService>();
   final DialogService _dialogService = locator<DialogService>();
@@ -28,7 +28,6 @@ class LoginPageModel extends BaseModel {
 
     if (result is bool) {
       if (result) {
-        print(result);
         _navigationService.navigateTo(HomeViewRoute);
       } else {
         await _dialogService.showDialog(

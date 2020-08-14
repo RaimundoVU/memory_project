@@ -1,11 +1,11 @@
 import 'package:bikecourier_app/router.dart';
 import 'package:bikecourier_app/services/dialog_service.dart';
 import 'package:bikecourier_app/services/navigation_service.dart';
-import 'package:bikecourier_app/views/welcome_page.dart';
+import 'package:bikecourier_app/views/startup_view.dart';
 import 'package:flutter/material.dart';
 import 'locator.dart';
 import 'managers/dialog_manager.dart';
-import 'setup/login_page.dart';
+import 'setup/login_view.dart';
 
 void main() {
   setupLocator();
@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
               fontFamily: 'Open Sans',
             ),
       ),
-      home: LoginPage(),
+      home: StartUpView(),
       onGenerateRoute: generateRoute,
     );
   }

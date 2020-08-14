@@ -7,7 +7,7 @@ import 'package:flutter/foundation.dart';
 import '../locator.dart';
 import 'base_model.dart';
 
-class SignUpPageModel extends BaseModel {
+class SignUpViewModel extends BaseModel {
   final AuthenticationService _authenticationService =
       locator<AuthenticationService>();
   final DialogService _dialogService = locator<DialogService>();
@@ -17,6 +17,7 @@ class SignUpPageModel extends BaseModel {
     @required String email,
     @required String password,
     @required String confirmPassword,
+    @required String fullName
   }) async {
 
     setBusy(true);
@@ -30,13 +31,14 @@ class SignUpPageModel extends BaseModel {
     var result = await _authenticationService.signUpWithEmail(
       email: email,
       password: password,
+      fullName: fullName
     );
 
     setBusy(false);
 
     if (result is bool) {
       if (result) {
-        _navigationService.navigateTo(LoginPageRoute);
+        _navigationService.navigateTo(LoginViewRoute);
       } else {
         await _dialogService.showDialog(
             title: 'El registro ha fallado',

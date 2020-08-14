@@ -1,4 +1,4 @@
-import 'package:bikecourier_app/viewmodels/login_page_model.dart';
+import 'package:bikecourier_app/viewmodels/login_view_model.dart';
 import 'package:bikecourier_app/shared/ui_helpers.dart';
 import 'package:bikecourier_app/widgets/busy_button.dart';
 import 'package:bikecourier_app/widgets/input_field.dart';
@@ -6,16 +6,16 @@ import 'package:bikecourier_app/widgets/text_link.dart';
 import 'package:flutter/material.dart';
 import 'package:provider_architecture/provider_architecture.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginView extends StatelessWidget {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    return ViewModelProvider<LoginPageModel>.withConsumer(
-        viewModel: LoginPageModel(),
+    return ViewModelProvider<LoginViewModel>.withConsumer(
+        viewModel: LoginViewModel(),
         builder: (context, model, chilld) => Scaffold(
-            backgroundColor: Color.fromRGBO(255, 251, 193, 1.0),
+            backgroundColor: Colors.white,
             body: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 50),
               child: Column(

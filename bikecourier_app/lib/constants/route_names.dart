@@ -1,4 +1,11 @@
-const String LoginPageRoute = "LoginPage";
-const String SignUpViewRoute = "SignUpPage";
-const String HomeViewRoute = "Home";
+const String LoginViewRoute = "LoginView";
+const String SignUpViewRoute = "SignUpView";
+const String HomeViewRoute = "HomeView";
+const String ClientMainViewRoute = "ClientMainView";
+const String CreateDeliveryViewRoute = "CreateDeliveryView";
+const String CreateStartViewRoute = "CreateStartView";
+const String CreateEndViewRoute = "CreateEndView";
+const String CreateObjectViewRoute = "CreateObjectView";
+const String ConfirmLocationViewRoute = "ConfirmLocationView";
+const String DeliveryViewRoute = "DeliveryView";
 // Generate the views here

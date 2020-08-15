@@ -3,17 +3,20 @@ class DeliveryLocation {
   double lat;
   double lng;
   String notes = '';
-  String deliveryId = '';
 
-  DeliveryLocation({this.location, this.lat, this.lng, this.notes, this.deliveryId});
-  
-  Map<String, dynamic> toMap(){
+  DeliveryLocation({
+    this.location,
+    this.lat,
+    this.lng,
+    this.notes,
+  });
+
+  Map<String, dynamic> toMap() {
     return {
       'location': location,
       'lat': lat,
       'lng': lng,
       'notes': notes,
-      'deliveryId': deliveryId
     };
   }
 
@@ -24,8 +27,6 @@ class DeliveryLocation {
       lat: map['lat'],
       lng: map['lng'],
       notes: map['notes'],
-      deliveryId: map['deliveryId']
     );
   }
-
 }

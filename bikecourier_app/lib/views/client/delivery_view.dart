@@ -1,5 +1,6 @@
 import 'package:bikecourier_app/shared/ui_helpers.dart';
 import 'package:bikecourier_app/viewmodels/client/delivery_view_model.dart';
+import 'package:bikecourier_app/widgets/busy_button.dart';
 import 'package:flutter/material.dart';
 import 'package:provider_architecture/provider_architecture.dart';
 
@@ -43,9 +44,9 @@ class DeliveryView extends StatelessWidget {
                         child: ListTile(
                       title: Text('Dirección de origen'),
                       subtitle: model.start != null
-                          ? Text("Dirección:" +
+                          ? Text("Dirección: " +
                               model.start.location +
-                              "\nNotas:" +
+                              "\nNotas: " +
                               model.start.notes)
                           : Text(""),
                     )),
@@ -71,9 +72,9 @@ class DeliveryView extends StatelessWidget {
                         child: ListTile(
                       title: Text('Dirección de destino'),
                       subtitle: model.end != null
-                          ? Text("Dirección:" +
+                          ? Text("Dirección: " +
                               model.end.location +
-                              "\nNotas:" +
+                              "\nNotas: " +
                               model.end.notes)
                           : Text(""),
                     )),
@@ -99,11 +100,11 @@ class DeliveryView extends StatelessWidget {
                         child: ListTile(
                       title: Text('Objetos'),
                       subtitle: model.object != null
-                          ? Text("Tipo:" +
+                          ? Text("Tipo: " +
                               model.object.type +
-                              "\nTamaño:" +
+                              "\nTamaño: " +
                               model.object.size +
-                              "\nNotas:" +
+                              "\nNotas: " +
                               model.object.info)
                           : Text(""),
                     )),
@@ -117,7 +118,21 @@ class DeliveryView extends StatelessWidget {
                         : Text('Seleccionar'),
                   ),
                 ],
-              )
+              ),
+              verticalSpaceMedium,
+              Row(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  BusyButton(
+                    title: 'Listo',
+                    busy: model.busy,
+                    onPressed: () {
+                      model.addDelivery();
+                    },
+                  ),
+                ],
+              ),
             ],
           ),
         ),

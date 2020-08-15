@@ -15,12 +15,6 @@ class FirestoreService {
 
   StreamController<List<Delivery>> _deliveryController =
       StreamController<List<Delivery>>.broadcast();
-  // StreamController<List<DeliveryStart>> _deliveryStartController =
-  //     StreamController<List<DeliveryStart>>.broadcast();
-  // StreamController<List<DeliveryEnd>> _deliveryEndController =
-  //     StreamController<List<DeliveryEnd>>.broadcast();
-  // StreamController<List<DeliveryObject>> _deliveryObjectController =
-  //     StreamController<List<DeliveryObject>>.broadcast();
 
   Future createUser(User user) async {
     try {
@@ -78,9 +72,18 @@ class FirestoreService {
     return _deliveryController.stream;
   }
 
-  Future createDelivery(Delivery delivery) async {
+  Future addDelivery(Delivery delivery) async {
     try {
-      await _deliveryCollectionReference.document().setData(delivery.toMap());
+      if (delivery.start == null ||
+          delivery.object == null ||
+          delivery.end == null) {
+        return false;
+      }
+      await _deliveryCollectionReference
+          .document()
+          .setData(delivery.toMap())
+          .toString();
+      return true;
     } catch (e) {
       return e.message;
     }

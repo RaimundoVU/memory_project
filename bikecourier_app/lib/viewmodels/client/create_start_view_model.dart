@@ -1,3 +1,4 @@
+import 'package:bikecourier_app/constants/route_names.dart';
 import 'package:bikecourier_app/models/delivery_location.dart';
 import 'package:bikecourier_app/services/authentication_service.dart';
 import 'package:bikecourier_app/services/firestore_service.dart';
@@ -20,8 +21,13 @@ class CreateStartViewModel extends BaseModel {
 
   bool get _editting => _edittingStart != null;
 
-  void addStart({String location, String notes}) {
-    DeliveryLocation start = DeliveryLocation(location: location, notes: notes);
+  void addStart({String location, String notes}) async {
+    setBusy(true);
+    var result = await _navigationService.navigateTo(ConfirmLocationViewRoute,
+        arguments: "start");
+    DeliveryLocation start = DeliveryLocation(location: location, notes: notes, lat: result.latitude, lng: result.longitude);
+
+    setBusy(false);
     _navigationService.popResult(start);
   }
 }

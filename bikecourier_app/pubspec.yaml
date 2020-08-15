@@ -38,6 +38,8 @@ dependencies:
   # provider
   provider: ^3.2.0
   # provider architecture
+  location: ^3.0.2
+  google_maps_flutter: ^0.5.28+1
   provider_architecture: ^1.0.3
 
 

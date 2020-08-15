@@ -1,5 +1,5 @@
 import 'package:bikecourier_app/shared/ui_helpers.dart';
-import 'package:bikecourier_app/viewmodels/client/client_main_view_mode.dart';
+import 'package:bikecourier_app/viewmodels/client/client_main_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider_architecture/provider_architecture.dart';
 

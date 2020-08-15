@@ -1,6 +1,6 @@
 import 'package:bikecourier_app/models/delivery_location.dart';
 import 'package:bikecourier_app/shared/ui_helpers.dart';
-import 'package:bikecourier_app/viewmodels/client/create_start_view_mode.dart';
+import 'package:bikecourier_app/viewmodels/client/create_start_view_model.dart';
 import 'package:bikecourier_app/widgets/busy_button.dart';
 import 'package:bikecourier_app/widgets/input_field.dart';
 import 'package:flutter/material.dart';

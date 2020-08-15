@@ -11,6 +11,8 @@ import 'package:bikecourier_app/views/client/create_start_view.dart';
 import 'package:bikecourier_app/views/client/delivery_view.dart';
 import 'package:flutter/material.dart';
 
+import 'views/client/confirm_location_view.dart';
+
 Route<dynamic> generateRoute(RouteSettings settings) {
   switch (settings.name) {
     case LoginViewRoute:
@@ -61,6 +63,14 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return _getPageRoute(
         routeName: settings.name,
         viewToShow: DeliveryView(),
+      );
+    case ConfirmLocationViewRoute:
+      var type = settings.arguments as String;
+      return _getPageRoute(
+        routeName: settings.name,
+        viewToShow: ConfirmLocationView(
+          type: type,
+        )
       );
     default:
       return MaterialPageRoute(

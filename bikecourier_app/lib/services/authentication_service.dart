@@ -44,16 +44,17 @@ class AuthenticationService {
       if (authResult.user != null) {
         authResult.user.sendEmailVerification();
       }
-      _currentUser = User(
-        id: authResult.user.uid,
-        email: email,
-        fullName: fullName
-      );
+      _currentUser =
+          User(id: authResult.user.uid, email: email, fullName: fullName);
       await _firestoreService.createUser(_currentUser);
       return authResult.user != null;
     } catch (e) {
       return e.message;
     }
+  }
+
+  void signOut() async {
+    await _firebaseAuth.signOut();
   }
 
   Future<bool> isUserLoggedIn() async {

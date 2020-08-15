@@ -5,7 +5,6 @@ import 'package:bikecourier_app/services/firestore_service.dart';
 import 'package:bikecourier_app/services/navigation_service.dart';
 import 'package:bikecourier_app/viewmodels/base_model.dart';
 import 'package:flutter/foundation.dart';
-
 import '../../locator.dart';
 
 class CreateStartViewModel extends BaseModel {

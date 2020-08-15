@@ -55,17 +55,16 @@ class FirestoreService {
     }
   }
 
-  Stream listenToDeliveryRealTime() {
+  Stream listenToDeliveryRealTime(String id) {
     _deliveryCollectionReference.snapshots().listen((deliverySnapshot) {
       if (deliverySnapshot.documents.isNotEmpty) {
-        // var deliveries = deliverySnapshot.documents
-        //     .map((delivery) => Delivery.fromMap(delivery.data))
-        //     .where((element) =>
-        //        // element.orderedBy == _authenticationService.currentUser.id
-        //        )
-        //     .toList();
+        var deliveries = deliverySnapshot.documents
+            .map((delivery) => Delivery.fromMap(delivery.data))
+            .where((element) =>
+                element.orderedBy != null )
+            .toList();
 
-        // _deliveryController.add(deliveries);
+        _deliveryController.add(deliveries);
       }
     });
 

@@ -31,13 +31,15 @@ class Delivery {
 
   static Delivery fromMap(Map<String, dynamic> map) {
     if (map == null) return null;
-
+    // print(map['start']);
+    // DeliveryLocation localStart = DeliveryLocation.fromMap(map[])
     return Delivery(
-        status: map['status'],
-        orderedBy: map['orderedBy'],
-        deliveredBy: map['deliveredBy'],
-        start: map['start'].fromMap(),
-        end: map['end'].fromMap(),
-        object: map['object'].fromMap());
+      status: map['status'],
+      orderedBy: map['orderedBy'],
+      deliveredBy: map['deliveredBy'],
+      start: DeliveryLocation.fromMap(map['start']),
+      end: DeliveryLocation.fromMap(map['end']),
+      object: DeliveryObject.fromMap(map['object']),
+    );
   }
 }

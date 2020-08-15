@@ -15,8 +15,22 @@ class ClientMainViewModel extends BaseModel {
   NavigationService _navigationService = locator<NavigationService>();
   DialogService _dialogService = locator<DialogService>();
 
-  navigateToCreateDelivery() async
-  {
+  List<Delivery> _deliveries;
+  List<Delivery> get deliveries => _deliveries;
+
+
+  void listenToDeliveries(String uid) {
+    setBusy(true);
+    _firestoreService.listenToDeliveryRealTime(uid).listen((deliveryData) {
+      List<Delivery> updatedDeliveries = deliveryData;
+      if (updatedDeliveries != null && updatedDeliveries.length > 0) {
+        _deliveries = updatedDeliveries;
+        notifyListeners();
+      }
+     });
+     setBusy(false);
+  }
+  navigateToCreateDelivery() async {
     _navigationService.navigateTo(DeliveryViewRoute);
   }
 }

@@ -1,5 +1,6 @@
 import 'package:bikecourier_app/shared/ui_helpers.dart';
 import 'package:bikecourier_app/viewmodels/home_view_model.dart';
+import 'package:bikecourier_app/widgets/app_drawer.dart';
 import 'package:bikecourier_app/widgets/home_card.dart';
 import 'package:flutter/material.dart';
 import 'package:provider_architecture/provider_architecture.dart';
@@ -15,6 +16,7 @@ class HomeView extends StatelessWidget {
           backgroundColor: Colors.black,
           iconTheme: IconThemeData(color: Colors.white),
         ),
+        drawer: AppDrawer(),
         body: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10),
             child: ListView(

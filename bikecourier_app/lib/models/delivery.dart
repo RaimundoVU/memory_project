@@ -5,6 +5,7 @@ class Delivery {
   final String status;
   final String orderedBy;
   final String deliveredBy;
+  final String documentId;
 
   final DeliveryLocation start;
   final DeliveryLocation end;
@@ -16,7 +17,8 @@ class Delivery {
       this.deliveredBy,
       this.start,
       this.end,
-      this.object});
+      this.object,
+      this.documentId});
 
   Map<String, dynamic> toMap() {
     return {
@@ -29,7 +31,7 @@ class Delivery {
     };
   }
 
-  static Delivery fromMap(Map<String, dynamic> map) {
+  static Delivery fromMap(Map<String, dynamic> map, String documentId) {
     if (map == null) return null;
     // print(map['start']);
     // DeliveryLocation localStart = DeliveryLocation.fromMap(map[])
@@ -40,6 +42,7 @@ class Delivery {
       start: DeliveryLocation.fromMap(map['start']),
       end: DeliveryLocation.fromMap(map['end']),
       object: DeliveryObject.fromMap(map['object']),
+      documentId: documentId,
     );
   }
 }

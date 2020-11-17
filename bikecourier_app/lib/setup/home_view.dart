@@ -31,7 +31,7 @@ class HomeView extends StatelessWidget {
                         mainAxisSize: MainAxisSize.min,
                         children: <Widget>[
                           const ListTile(
-                            leading: Icon(Icons.drafts, color: Colors.black),
+                            leading: Icon(Icons.send, color: Colors.black),
                             title: Text(
                               'Realizar envío',
                               style: TextStyle(fontWeight: FontWeight.bold),
@@ -64,7 +64,7 @@ class HomeView extends StatelessWidget {
                         mainAxisSize: MainAxisSize.min,
                         children: <Widget>[
                           const ListTile(
-                            leading: Icon(Icons.drafts, color: Colors.black),
+                            leading: Icon(Icons.directions_bike, color: Colors.black),
                             title: Text(
                               'Ser Mensajero',
                               style: TextStyle(fontWeight: FontWeight.bold),

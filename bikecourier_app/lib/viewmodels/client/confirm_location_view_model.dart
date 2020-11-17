@@ -50,7 +50,7 @@ class ConfirmLocationViewModel extends BaseModel {
     var currentLocation = await _locationService.getLocation();
     _cameraPosition = CameraPosition(
         target: new LatLng(currentLocation.latitude, currentLocation.longitude),
-        zoom: 14);
+        zoom: 15);
     setBusy(false);
   }
 

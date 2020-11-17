@@ -46,15 +46,16 @@ class ClientMainView extends StatelessWidget {
                 child: model.deliveries != null
                     ? ListView.builder(
                         itemCount: model.deliveries.length,
-                        itemBuilder: (context, index) => DeliveryItem(
-                          delivery: model.deliveries[index],
-                        ),
-                      )
+                        itemBuilder: (context, index) => GestureDetector(
+                              onTap: () => model.goToMap(index),
+                              child: DeliveryItem(
+                                delivery: model.deliveries[index],
+                                onDeleteDelivery: () =>
+                                    model.deleteDelivery(index),
+                              ),
+                            ))
                     : Center(
-                        child: CircularProgressIndicator(
-                          valueColor: AlwaysStoppedAnimation(
-                              Theme.of(context).primaryColor),
-                        ),
+                        child: Text('Aun no has realizado ningún pedido.'),
                       ),
               ),
             ],

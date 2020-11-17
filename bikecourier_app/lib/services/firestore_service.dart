@@ -59,7 +59,7 @@ class FirestoreService {
     _deliveryCollectionReference.snapshots().listen((deliverySnapshot) {
       if (deliverySnapshot.documents.isNotEmpty) {
         var deliveries = deliverySnapshot.documents
-            .map((delivery) => Delivery.fromMap(delivery.data))
+            .map((delivery) => Delivery.fromMap(delivery.data, delivery.documentID))
             .where((element) =>
                 element.orderedBy != null )
             .toList();
@@ -86,5 +86,9 @@ class FirestoreService {
     } catch (e) {
       return e.message;
     }
+  }
+
+  Future deleteDelivery(String documentId) async {
+    await _deliveryCollectionReference.document(documentId).delete();
   }
 }

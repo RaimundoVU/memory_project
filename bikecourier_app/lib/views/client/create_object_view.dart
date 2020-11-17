@@ -19,7 +19,7 @@ class CreateObjectView extends StatelessWidget {
       viewModel: CreateObjectViewModel(),
       onModelReady: (model) {
         notesController.text = edittingObject?.info ?? '';
-        model.setSelectedType(edittingObject?.type ?? 'Seleccionar tipo de objecto');
+        model.setSelectedType(edittingObject?.type ?? 'Seleccionar tipo de objeto');
         model.setSelectedSize(edittingObject?.size ?? 'Seleccionar tamaño de objeto');
         model.setEditting(edittingObject);
       },

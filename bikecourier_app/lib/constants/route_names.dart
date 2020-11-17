@@ -8,4 +8,5 @@ const String CreateEndViewRoute = "CreateEndView";
 const String CreateObjectViewRoute = "CreateObjectView";
 const String ConfirmLocationViewRoute = "ConfirmLocationView";
 const String DeliveryViewRoute = "DeliveryView";
+const String DeliveryMapViewRoute = "DeliveryMapView";
 // Generate the views here

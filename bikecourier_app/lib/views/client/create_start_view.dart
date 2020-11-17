@@ -3,6 +3,7 @@ import 'package:bikecourier_app/shared/ui_helpers.dart';
 import 'package:bikecourier_app/viewmodels/client/create_start_view_model.dart';
 import 'package:bikecourier_app/widgets/busy_button.dart';
 import 'package:bikecourier_app/widgets/input_field.dart';
+import 'package:bikecourier_app/widgets/search_field.dart';
 import 'package:flutter/material.dart';
 import 'package:provider_architecture/provider_architecture.dart';
 
@@ -32,6 +33,8 @@ class CreateStartView extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               verticalSpace(40),
+              SearchField(controller: locationController, placeholder: "Test"),
+              verticalSpaceMedium,
               Text(
                 'Información de Origen',
                 style: TextStyle(fontSize: 26),

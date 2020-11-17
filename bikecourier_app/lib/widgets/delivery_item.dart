@@ -3,12 +3,13 @@ import 'package:flutter/material.dart';
 
 class DeliveryItem extends StatelessWidget {
   final Delivery delivery;
-  const DeliveryItem({Key key, this.delivery}) : super(key: key);
+  final Function onDeleteDelivery;
+  const DeliveryItem({Key key, this.delivery, this.onDeleteDelivery}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 60,
+      height: 100,
       margin: const EdgeInsets.only(top: 20),
       alignment: Alignment.center,
       child: Row(
@@ -16,11 +17,29 @@ class DeliveryItem extends StatelessWidget {
           Expanded(
               child: Padding(
             padding: const EdgeInsets.only(left: 15.0),
-            child: Text(delivery.status),
+            child: Column(
+              children: [
+                Text('Información del pedido',
+                    style: TextStyle(fontWeight: FontWeight.bold)),
+                Text('Origen: ' + delivery.start.location),
+                Text('Destino: ' + delivery.end.location),
+                Text('Tipo de Objeto: ' + delivery.object.type),
+                Text(delivery.status,
+                    style: delivery.status == 'WAITING'
+                        ? TextStyle(color: Colors.yellow)
+                        : TextStyle(
+                            color: Colors.green,
+                          )),
+              ],
+            ),
           )),
           IconButton(
             icon: Icon(Icons.close),
-            onPressed: () {},
+            onPressed: () {
+              if (onDeleteDelivery != null) {
+                onDeleteDelivery();
+              }
+            },
           ),
         ],
       ),

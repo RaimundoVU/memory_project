@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:bikecourier_app/constants/route_names.dart';
 import 'package:bikecourier_app/models/delivery.dart';
 import 'package:bikecourier_app/services/authentication_service.dart';
@@ -30,7 +32,27 @@ class ClientMainViewModel extends BaseModel {
      });
      setBusy(false);
   }
+
+  Future deleteDelivery(int index) async {
+    var dialogResponse = await _dialogService.showConfirmationDialog(
+      title: '¿Estás seguro?',
+      description: 'Se eliminará esta encomienda para siempre. ¿Quieres continuar?',
+      confirmationTitle: 'Sí',
+      cancelTitle: 'No'
+    );
+
+    if (dialogResponse.confirmed) {
+      setBusy(true);
+      await _firestoreService.deleteDelivery(_deliveries[index].documentId);
+      setBusy(false);
+    }
+  }
   navigateToCreateDelivery() async {
     _navigationService.navigateTo(DeliveryViewRoute);
+  }
+
+  goToMap(int index) async{ 
+
+    _navigationService.navigateTo(DeliveryMapViewRoute, arguments: _deliveries[index]);
   }
 }

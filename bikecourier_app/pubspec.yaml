@@ -41,7 +41,9 @@ dependencies:
   location: ^3.0.2
   google_maps_flutter: ^0.5.28+1
   provider_architecture: ^1.0.3
-
+  flutter_google_places: ^0.2.3
+  google_maps_webservice: ^0.0.14
+  uuid: ^2.0.1
 
 dev_dependencies:
   flutter_test:

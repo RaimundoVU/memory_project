@@ -1,4 +1,5 @@
 import 'package:bikecourier_app/constants/route_names.dart';
+import 'package:bikecourier_app/models/delivery.dart';
 import 'package:bikecourier_app/models/delivery_location.dart';
 import 'package:bikecourier_app/models/delivery_object.dart';
 import 'package:bikecourier_app/setup/home_view.dart';
@@ -8,6 +9,7 @@ import 'package:bikecourier_app/views/client/client_main_view.dart';
 import 'package:bikecourier_app/views/client/create_end_view.dart';
 import 'package:bikecourier_app/views/client/create_object_view.dart';
 import 'package:bikecourier_app/views/client/create_start_view.dart';
+import 'package:bikecourier_app/views/client/delivery_map_view.dart';
 import 'package:bikecourier_app/views/client/delivery_view.dart';
 import 'package:flutter/material.dart';
 
@@ -70,6 +72,14 @@ Route<dynamic> generateRoute(RouteSettings settings) {
         routeName: settings.name,
         viewToShow: ConfirmLocationView(
           type: type,
+        )
+      );
+    case DeliveryMapViewRoute:
+      var delivery = settings.arguments as Delivery;
+      return _getPageRoute(
+        routeName: settings.name,
+        viewToShow: DeliveryMapView(
+          delivery: delivery
         )
       );
     default:

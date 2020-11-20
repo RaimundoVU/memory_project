@@ -6,10 +6,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_google_places/flutter_google_places.dart';
 import 'package:google_maps_webservice/places.dart';
+import 'package:uuid/uuid.dart';
+import 'package:uuid/uuid.dart';
 import 'note_text.dart';
 
 class SearchField extends StatefulWidget {
-  final TextEditingController controller;
+  TextEditingController controller;
   final TextInputType textInputType;
   final bool password;
   final bool isReadOnly;
@@ -75,11 +77,17 @@ class _SearchFieldState extends State<SearchField> {
                   textInputAction: widget.textInputAction,
                   onChanged: widget.onChanged,
                   onTap: () async {
+                    final sessionToken = Uuid().v4();
                     final Suggestion result = await showSearch(
                       context: context,
-                      delegate: AddressSearch()
+                      delegate: AddressSearch(sessionToken)
                       );
                       print(result);
+                      if (result != null) {
+                        setState(() {
+                          widget.controller.text = result.description ;
+                        });
+                      }
                     // Prediction p = await PlacesAutocomplete.show(
                     //   context: context, 
                     //   apiKey: "AIzaSyDdsRv69Vj2zLIoYCDt62AtB7JDvOU-HH8",

@@ -6,6 +6,7 @@ import 'package:bikecourier_app/setup/home_view.dart';
 import 'package:bikecourier_app/setup/login_view.dart';
 import 'package:bikecourier_app/setup/signup_view.dart';
 import 'package:bikecourier_app/views/client/client_main_view.dart';
+import 'package:bikecourier_app/views/client/client_view.dart';
 import 'package:bikecourier_app/views/client/create_end_view.dart';
 import 'package:bikecourier_app/views/client/create_object_view.dart';
 import 'package:bikecourier_app/views/client/create_start_view.dart';
@@ -31,6 +32,11 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return _getPageRoute(
         routeName: settings.name,
         viewToShow: HomeView(),
+      );
+    case ClientViewRoute:
+      return _getPageRoute(
+        routeName: settings.name,
+        viewToShow: ClientView(),
       );
     case ClientMainViewRoute:
       return _getPageRoute(
@@ -67,11 +73,14 @@ Route<dynamic> generateRoute(RouteSettings settings) {
         viewToShow: DeliveryView(),
       );
     case ConfirmLocationViewRoute:
-      var type = settings.arguments as String;
+      print(settings.arguments);
+      var arguments = settings.arguments as List;
       return _getPageRoute(
         routeName: settings.name,
         viewToShow: ConfirmLocationView(
-          type: type,
+          type: arguments[0],
+          lat: arguments[1],
+          lng: arguments[2],
         )
       );
     case DeliveryMapViewRoute:

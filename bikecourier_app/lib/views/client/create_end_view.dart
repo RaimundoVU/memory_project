@@ -1,14 +1,18 @@
 import 'package:bikecourier_app/models/delivery_location.dart';
+import 'package:bikecourier_app/services/place_service.dart';
 import 'package:bikecourier_app/shared/ui_helpers.dart';
 import 'package:bikecourier_app/viewmodels/client/create_end_view_model.dart';
 import 'package:bikecourier_app/widgets/busy_button.dart';
 import 'package:bikecourier_app/widgets/input_field.dart';
+import 'package:bikecourier_app/widgets/search_field.dart';
 import 'package:flutter/material.dart';
 import 'package:provider_architecture/provider_architecture.dart';
 
 class CreateEndView extends StatelessWidget {
   final locationController = TextEditingController();
   final notesController = TextEditingController();
+  final _place = Place();
+
   final DeliveryLocation edittingEnd;
 
   CreateEndView({Key key, this.edittingEnd}) : super(key: key);
@@ -37,9 +41,10 @@ class CreateEndView extends StatelessWidget {
                 style: TextStyle(fontSize: 26),
               ),
               verticalSpaceMedium,
-              InputField(
+              SearchField(
                 placeholder: 'Dirección de destino',
                 controller: locationController,
+                place: _place
               ),
               verticalSpaceMedium,
               Text('Notas'),
@@ -60,9 +65,11 @@ class CreateEndView extends StatelessWidget {
                     title: 'Listo',
                     busy: model.busy,
                     onPressed: () {
+                      print(_place);
                       model.addEnd(
                         location: locationController.text,
                         notes: notesController.text,
+                        place: _place
                       );
                     },
                   ),

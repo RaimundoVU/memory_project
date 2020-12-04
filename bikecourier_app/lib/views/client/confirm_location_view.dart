@@ -5,13 +5,15 @@ import 'package:provider_architecture/provider_architecture.dart';
 
 class ConfirmLocationView extends StatelessWidget {
   String type;
-  ConfirmLocationView({this.type});
+  double lat;
+  double lng;
+  ConfirmLocationView({this.type, this.lat, this.lng});
   @override
   Widget build(BuildContext context) {
     return ViewModelProvider<ConfirmLocationViewModel>.withConsumer(
       viewModel: ConfirmLocationViewModel(),
       onModelReady: (model) {
-        model.onCameraPosition();
+        model.onCameraPosition(lat, lng);
       },
       builder: (context, model, child) => Scaffold(
         appBar: AppBar(
@@ -21,7 +23,7 @@ class ConfirmLocationView extends StatelessWidget {
         body: GoogleMap(
           initialCameraPosition: model.cameraPosition,
           mapType: MapType.normal,
-          onMapCreated: (controller) => model.onMapCreated(controller, type),
+          onMapCreated: (controller) => model.onMapCreated(controller, type, lat, lng),
           markers: model.markers,
           onTap: (cordinate) {
             model.controller.animateCamera(CameraUpdate.newLatLng(cordinate));

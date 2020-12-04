@@ -5,7 +5,7 @@ import 'package:bikecourier_app/widgets/delivery_item.dart';
 import 'package:flutter/material.dart';
 import 'package:provider_architecture/provider_architecture.dart';
 
-class ClientMainView extends StatelessWidget {
+class ClientMainDoneView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ViewModelProvider<ClientMainViewModel>.withConsumer(
@@ -24,7 +24,7 @@ class ClientMainView extends StatelessWidget {
                   SizedBox(
                     height: 20,
                     child: Text(
-                      'Historial de Pedidos',
+                      'Historial de Pedidos Realizados',
                       style: TextStyle(fontSize: 18),
                     ),
                   )

@@ -19,12 +19,11 @@ class ConfirmLocationViewModel extends BaseModel {
   GoogleMapController get controller => _controller;
   Set<Marker> get markers => _markers;
 
-  void onMapCreated(GoogleMapController controller, String type) async {
+  void onMapCreated(GoogleMapController controller, String type, double lat, double lng) async {
     String title;
     String snippet;
     setBusy(true);
     _controller = controller;
-    var currentLocation = await _locationService.getLocation();
     if (type == "start") {
       title = "Ubicación de Origen";
       snippet = "Desde aquí comienza la encomienda";
@@ -36,7 +35,7 @@ class ConfirmLocationViewModel extends BaseModel {
       Marker(
           draggable: true,
           markerId: MarkerId("0"),
-          position: LatLng(currentLocation.latitude, currentLocation.longitude),
+          position: LatLng(lat, lng),
           onDragEnd: ((value) {
             print("locationdrag: " + value.latitude.toString());
           }),
@@ -45,11 +44,10 @@ class ConfirmLocationViewModel extends BaseModel {
     setBusy(false);
   }
 
-  void onCameraPosition() async {
+  void onCameraPosition(double lat, double lng) async {
     setBusy(true);
-    var currentLocation = await _locationService.getLocation();
     _cameraPosition = CameraPosition(
-        target: new LatLng(currentLocation.latitude, currentLocation.longitude),
+        target: new LatLng(lat, lng),
         zoom: 15);
     setBusy(false);
   }

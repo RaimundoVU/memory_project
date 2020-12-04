@@ -9,4 +9,5 @@ const String CreateObjectViewRoute = "CreateObjectView";
 const String ConfirmLocationViewRoute = "ConfirmLocationView";
 const String DeliveryViewRoute = "DeliveryView";
 const String DeliveryMapViewRoute = "DeliveryMapView";
+const String ClientViewRoute = "ClientView";
 // Generate the views here

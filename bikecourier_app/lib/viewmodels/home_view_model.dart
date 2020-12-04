@@ -15,6 +15,6 @@ class HomeViewModel extends BaseModel {
     setBusy(true);
     await _firestoreService.changeRole(uid: currentUser.id, role: 'CLIENT');
     setBusy(false);
-    _navigationService.navigateTo(ClientMainViewRoute);
+    _navigationService.navigateTo(ClientViewRoute);
   }
 }

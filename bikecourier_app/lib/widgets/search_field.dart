@@ -1,5 +1,6 @@
 import 'package:bikecourier_app/managers/adress_search.dart';
 import 'package:bikecourier_app/models/Suggestion.dart';
+import 'package:bikecourier_app/services/place_service.dart';
 import 'package:bikecourier_app/shared/shared_styles.dart';
 import 'package:bikecourier_app/shared/ui_helpers.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +13,7 @@ import 'note_text.dart';
 
 class SearchField extends StatefulWidget {
   TextEditingController controller;
+  Place place;
   final TextInputType textInputType;
   final bool password;
   final bool isReadOnly;
@@ -29,6 +31,7 @@ class SearchField extends StatefulWidget {
   SearchField(
       {@required this.controller,
       @required this.placeholder,
+      this.place,
       this.enterPressed,
       this.fieldFocusNode,
       this.nextFocusNode,
@@ -82,20 +85,16 @@ class _SearchFieldState extends State<SearchField> {
                       context: context,
                       delegate: AddressSearch(sessionToken)
                       );
-                      print(result);
+                      final placeDetails = await PlaceApiProvider(sessionToken)
+                      .getPlaceDetailFromId(result.placeId);
                       if (result != null) {
                         setState(() {
-                          widget.controller.text = result.description ;
+                          widget.controller.text = result.description;
+                          widget.place.lat = placeDetails.lat;
+                          widget.place.lng = placeDetails.lng;
                         });
                       }
-                    // Prediction p = await PlacesAutocomplete.show(
-                    //   context: context, 
-                    //   apiKey: "AIzaSyDdsRv69Vj2zLIoYCDt62AtB7JDvOU-HH8",
-                    //   language: "es",
-                    //   components: [
-                    //       Component(Component.country, "cl")
-                    //     ]
-                    //   );
+
                   },
                   inputFormatters:
                       widget.formatter != null ? [widget.formatter] : null,

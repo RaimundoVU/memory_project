@@ -1,9 +1,20 @@
-
 import 'dart:convert';
 import 'dart:io';
 
 import 'package:bikecourier_app/models/Suggestion.dart';
 import 'package:http/http.dart';
+
+class Place {
+  double lat;
+  double lng;
+
+  Place({this.lat, this.lng});
+
+  @override
+  String toString() {
+    return 'Place(lat: $lat, lng: $lng)';
+  }
+}
 
 class PlaceApiProvider {
   final client = Client();
@@ -31,6 +42,45 @@ class PlaceApiProvider {
       }
       if (result['status'] == 'ZERO_RESULTS') {
         return [];
+      }
+      throw Exception(result['error_message']);
+    } else {
+      throw Exception('Failed to fetch suggestion');
+    }
+  }
+
+  Future<Place> getPlaceDetailFromId(String placeId) async {
+    final request =
+        'https://maps.googleapis.com/maps/api/place/details/json?place_id=$placeId&fields=address_component,geometry&key=$apiKey&sessiontoken=$sessionToken';
+    final response = await client.get(request);
+
+    if (response.statusCode == 200) {
+      print("----------------------");
+      final result = json.decode(response.body);
+      print(result);
+      print("----------------------");
+
+      if (result['status'] == 'OK') {
+        final location =
+            result['result']['geometry']['location'] as Map<String, dynamic>;
+        // build result
+        final place = Place();
+
+        print("-----");
+
+        location.forEach((key, value) {
+          if (key == "lat") {
+            place.lat = value;
+          }
+          if (key == "lng") {
+            place.lng = value;
+          }
+        });
+        print("-----");
+        print(place.toString());
+        print("-----");
+
+        return place;
       }
       throw Exception(result['error_message']);
     } else {

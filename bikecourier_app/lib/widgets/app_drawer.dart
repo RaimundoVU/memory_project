@@ -28,12 +28,14 @@ class AppDrawer extends StatelessWidget {
       DrawerOption(
         title: 'Configuración',
         iconData: Icons.settings,
+        onTap: () {
+          _navigationService.navigateTo(ConfigViewRoute);
+        }
       ),
       DrawerOption(
         title: 'Cerrar Sesión',
         iconData: Icons.power_settings_new,
         onTap: () {
-          print('cerrar sesión');
           _authenticationService.signOut();
           _navigationService.navigateTo(LoginViewRoute);
         },

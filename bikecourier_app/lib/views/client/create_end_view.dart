@@ -32,50 +32,50 @@ class CreateEndView extends StatelessWidget {
         ),
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 30.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              verticalSpace(40),
-              Text(
-                'Información de Destino',
-                style: TextStyle(fontSize: 26),
-              ),
-              verticalSpaceMedium,
-              SearchField(
-                placeholder: 'Dirección de destino',
-                controller: locationController,
-                place: _place
-              ),
-              verticalSpaceMedium,
-              Text('Notas'),
-              verticalSpaceSmall,
-              InputField(
-                placeholder: 'Notas para el mensajero',
-                controller: notesController,
-                smallVersion: false,
-                additionalNote:
-                    'Puntos de referencia, por quién preguntar, etc.',
-              ),
-              verticalSpaceMedium,
-              Row(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  BusyButton(
-                    title: 'Listo',
-                    busy: model.busy,
-                    onPressed: () {
-                      print(_place);
-                      model.addEnd(
-                        location: locationController.text,
-                        notes: notesController.text,
-                        place: _place
-                      );
-                    },
-                  ),
-                ],
-              ),
-            ],
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                verticalSpace(40),
+                Text(
+                  'Información de Destino',
+                  style: TextStyle(fontSize: 26),
+                ),
+                verticalSpaceMedium,
+                SearchField(
+                    placeholder: 'Dirección de destino',
+                    controller: locationController,
+                    place: _place),
+                verticalSpaceMedium,
+                Text('Notas'),
+                verticalSpaceSmall,
+                InputField(
+                  placeholder: 'Notas para el mensajero',
+                  controller: notesController,
+                  smallVersion: false,
+                  additionalNote:
+                      'Puntos de referencia, por quién preguntar, etc.',
+                ),
+                verticalSpaceMedium,
+                Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    BusyButton(
+                      title: 'Listo',
+                      busy: model.busy,
+                      onPressed: () {
+                        print(_place);
+                        model.addEnd(
+                            location: locationController.text,
+                            notes: notesController.text,
+                            place: _place);
+                      },
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),

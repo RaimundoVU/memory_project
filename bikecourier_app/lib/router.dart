@@ -2,6 +2,8 @@ import 'package:bikecourier_app/constants/route_names.dart';
 import 'package:bikecourier_app/models/delivery.dart';
 import 'package:bikecourier_app/models/delivery_location.dart';
 import 'package:bikecourier_app/models/delivery_object.dart';
+import 'package:bikecourier_app/setup/add_favorites_view.dart';
+import 'package:bikecourier_app/setup/config_view.dart';
 import 'package:bikecourier_app/setup/home_view.dart';
 import 'package:bikecourier_app/setup/login_view.dart';
 import 'package:bikecourier_app/setup/signup_view.dart';
@@ -91,6 +93,16 @@ Route<dynamic> generateRoute(RouteSettings settings) {
           delivery: delivery
         )
       );
+    case ConfigViewRoute:
+        return _getPageRoute(
+          routeName: settings.name,
+          viewToShow: ConfigView()
+        );
+    case AddFavoritesViewRoute:
+        return _getPageRoute(
+          routeName: settings.name,
+          viewToShow: AddFavoritesView()
+        );
     default:
       return MaterialPageRoute(
           builder: (_) => Scaffold(

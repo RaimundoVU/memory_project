@@ -24,12 +24,7 @@ class DeliveryItem extends StatelessWidget {
                 Text('Origen: ' + delivery.start.location),
                 Text('Destino: ' + delivery.end.location),
                 Text('Tipo de Objeto: ' + delivery.object.type),
-                Text(delivery.status,
-                    style: delivery.status == 'WAITING'
-                        ? TextStyle(color: Colors.yellow)
-                        : TextStyle(
-                            color: Colors.green,
-                          )),
+                getText(delivery.status)
               ],
             ),
           )),
@@ -50,5 +45,26 @@ class DeliveryItem extends StatelessWidget {
             BoxShadow(blurRadius: 8, color: Colors.grey[200], spreadRadius: 3)
           ]),
     );
+  }
+
+  Widget getText(String status) {
+    if (status == "WAITING") {
+      return Text(
+        "EN ESPERA",
+        style: TextStyle(color: Colors.yellow),
+      );
+    }
+    if (status == "CANCELED") {
+      return Text(
+        "CANCELADO",
+        style: TextStyle(color: Colors.red)
+      );
+    }
+    if (status == "DONE") {
+      return Text(
+        "COMPLETADO",
+        style: TextStyle(color: Colors.green)
+      );
+    }
   }
 }

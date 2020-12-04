@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:bikecourier_app/models/delivery.dart';
+import 'package:bikecourier_app/models/saved_places.dart';
 import 'package:bikecourier_app/models/user.dart';
 import 'package:bikecourier_app/services/authentication_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -12,6 +13,8 @@ class FirestoreService {
       Firestore.instance.collection('users');
   final CollectionReference _deliveryCollectionReference =
       Firestore.instance.collection('delivery');
+  final CollectionReference _savedPlacesCollectionReference =
+      Firestore.instance.collection('savedPlaces');
 
   StreamController<List<Delivery>> _deliveryController =
       StreamController<List<Delivery>>.broadcast();
@@ -59,9 +62,27 @@ class FirestoreService {
     _deliveryCollectionReference.snapshots().listen((deliverySnapshot) {
       if (deliverySnapshot.documents.isNotEmpty) {
         var deliveries = deliverySnapshot.documents
-            .map((delivery) => Delivery.fromMap(delivery.data, delivery.documentID))
+            .map((delivery) =>
+                Delivery.fromMap(delivery.data, delivery.documentID))
             .where((element) =>
-                element.orderedBy != null )
+                element.status != "DONE" && element.status != "CANCELED")
+            .toList();
+
+        _deliveryController.add(deliveries);
+      }
+    });
+
+    return _deliveryController.stream;
+  }
+
+  Stream listenToDoneDeliveryRealTime(String id) {
+    _deliveryCollectionReference.snapshots().listen((deliverySnapshot) {
+      if (deliverySnapshot.documents.isNotEmpty) {
+        var deliveries = deliverySnapshot.documents
+            .map((delivery) =>
+                Delivery.fromMap(delivery.data, delivery.documentID))
+            .where((element) =>
+                element.status == "DONE" || element.status == "CANCELED")
             .toList();
 
         _deliveryController.add(deliveries);
@@ -90,5 +111,23 @@ class FirestoreService {
 
   Future deleteDelivery(String documentId) async {
     await _deliveryCollectionReference.document(documentId).delete();
+  }
+
+  Future addLocation(SavedPlaces place) async {
+    try {
+      if (place.name == null ||
+          place.location == null ||
+          place.lat == null ||
+          place.lng == null) {
+        return false;
+      }
+      await _savedPlacesCollectionReference
+          .document()
+          .setData(place.toMap())
+          .toString();
+      return true;
+    } catch (e) {
+      return e.message;
+    }
   }
 }

@@ -33,6 +33,18 @@ class ClientMainViewModel extends BaseModel {
      setBusy(false);
   }
 
+  void listenToDoneDeliveries(String uid) {
+    setBusy(true);
+    _firestoreService.listenToDoneDeliveryRealTime(uid).listen((deliveryData) {
+      List<Delivery> updatedDeliveries = deliveryData;
+      if (updatedDeliveries != null && updatedDeliveries.length > 0) {
+        _deliveries = updatedDeliveries;
+        notifyListeners();
+      }
+     });
+     setBusy(false);
+  }
+
   Future deleteDelivery(int index) async {
     var dialogResponse = await _dialogService.showConfirmationDialog(
       title: '¿Estás seguro?',

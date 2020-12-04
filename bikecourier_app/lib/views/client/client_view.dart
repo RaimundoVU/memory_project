@@ -25,7 +25,7 @@ class _ClientViewState extends State<ClientView>
     )),
     Tab(
         child: Text(
-      "Completados.",
+      "Completados",
       style: TextStyle(color: Colors.white),
     )),
   ];
@@ -67,9 +67,7 @@ class _ClientViewState extends State<ClientView>
       body: TabBarView(
         controller: _controller,
         children: [
-          Center(
-            child: ClientMainView()
-          ),
+          Center(child: ClientMainView()),
           Center(child: ClientMainDoneView())
         ],
       ),

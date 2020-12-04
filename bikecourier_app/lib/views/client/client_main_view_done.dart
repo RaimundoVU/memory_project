@@ -10,7 +10,7 @@ class ClientMainDoneView extends StatelessWidget {
   Widget build(BuildContext context) {
     return ViewModelProvider<ClientMainViewModel>.withConsumer(
       viewModel: ClientMainViewModel(),
-      onModelReady: (model) => model.listenToDeliveries(model.currentUser.id),
+      onModelReady: (model) => model.listenToDoneDeliveries(model.currentUser.id),
       builder: (context, model, child) => Scaffold(
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -24,7 +24,7 @@ class ClientMainDoneView extends StatelessWidget {
                   SizedBox(
                     height: 20,
                     child: Text(
-                      'Historial de Pedidos Realizados',
+                      'Historial de Pedidos Completados',
                       style: TextStyle(fontSize: 18),
                     ),
                   )

@@ -18,47 +18,49 @@ class LoginView extends StatelessWidget {
             backgroundColor: Colors.white,
             body: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 50),
-              child: Column(
-                children: <Widget>[
-                  SizedBox(
-                    height: 150,
-                    child: Image.asset('assets/images/logo.png'),
-                  ),
-                  InputField(
-                    placeholder: 'Correo',
-                    controller: emailController,
-                  ),
-                  verticalSpaceSmall,
-                  InputField(
-                    placeholder: 'Contraseña',
-                    password: true,
-                    controller: passwordController,
-                  ),
-                  verticalSpaceMedium,
-                  Row(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      BusyButton(
-                        title: 'Ingresar',
-                        busy: model.busy,
-                        onPressed: () {
-                          model.login(
-                            email: emailController.text,
-                            password: passwordController.text,
-                          );
-                        },
-                      ),
-                    ],
-                  ),
-                  verticalSpaceMedium,
-                  TextLink(
-                    'Crear una cuenta.',
-                    onPressed: () {
-                      model.navigateToSignUp();
-                    },
-                  )
-                ],
+              child: SingleChildScrollView(
+                child: Column(
+                  children: <Widget>[
+                    SizedBox(
+                      height: 150,
+                      child: Image.asset('assets/images/logo.png'),
+                    ),
+                    InputField(
+                      placeholder: 'Correo',
+                      controller: emailController,
+                    ),
+                    verticalSpaceSmall,
+                    InputField(
+                      placeholder: 'Contraseña',
+                      password: true,
+                      controller: passwordController,
+                    ),
+                    verticalSpaceMedium,
+                    Row(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        BusyButton(
+                          title: 'Ingresar',
+                          busy: model.busy,
+                          onPressed: () {
+                            model.login(
+                              email: emailController.text,
+                              password: passwordController.text,
+                            );
+                          },
+                        ),
+                      ],
+                    ),
+                    verticalSpaceMedium,
+                    TextLink(
+                      'Crear una cuenta.',
+                      onPressed: () {
+                        model.navigateToSignUp();
+                      },
+                    )
+                  ],
+                ),
               ),
             )));
   }

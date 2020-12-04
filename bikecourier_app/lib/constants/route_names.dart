@@ -10,4 +10,6 @@ const String ConfirmLocationViewRoute = "ConfirmLocationView";
 const String DeliveryViewRoute = "DeliveryView";
 const String DeliveryMapViewRoute = "DeliveryMapView";
 const String ClientViewRoute = "ClientView";
+const String ConfigViewRoute = "ConfigView";
+const String AddFavoritesViewRoute = "AddFavoritesView";
 // Generate the views here

@@ -13,7 +13,7 @@ class LoginView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ViewModelProvider<LoginViewModel>.withConsumer(
-        viewModel: LoginViewModel(),
+        viewModelBuilder: () => LoginViewModel(),
         builder: (context, model, chilld) => Scaffold(
             backgroundColor: Colors.white,
             body: Padding(

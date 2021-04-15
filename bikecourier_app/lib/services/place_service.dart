@@ -29,7 +29,7 @@ class PlaceApiProvider {
 
   Future<List<Suggestion>> fetchSuggestions(String input, String lang) async {
     final request =
-        'https://maps.googleapis.com/maps/api/place/autocomplete/json?input=$input&types=address&language=es&components=country:cl&key=$apiKey&sessiontoken=$sessionToken';
+        Uri.parse('https://maps.googleapis.com/maps/api/place/autocomplete/json?input=$input&types=address&language=es&components=country:cl&key=$apiKey&sessiontoken=$sessionToken');
     final response = await client.get(request);
     print(response);
     if (response.statusCode == 200) {
@@ -51,7 +51,7 @@ class PlaceApiProvider {
 
   Future<Place> getPlaceDetailFromId(String placeId) async {
     final request =
-        'https://maps.googleapis.com/maps/api/place/details/json?place_id=$placeId&fields=address_component,geometry&key=$apiKey&sessiontoken=$sessionToken';
+        Uri.parse('https://maps.googleapis.com/maps/api/place/details/json?place_id=$placeId&fields=address_component,geometry&key=$apiKey&sessiontoken=$sessionToken');
     final response = await client.get(request);
 
     if (response.statusCode == 200) {

@@ -18,7 +18,7 @@ class CreateStartView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ViewModelProvider.withConsumer(
-      viewModel: CreateStartViewModel(),
+      viewModelBuilder: () => CreateStartViewModel(),
       onModelReady: (model) {
         locationController.text = edittingStart?.location ?? '';
         notesController.text = edittingStart?.notes ?? '';

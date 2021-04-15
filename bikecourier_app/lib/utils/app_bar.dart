@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class CustomAppBar extends AppBar {
-  final FirebaseUser user;
+  final User user;
   String userName;
   CustomAppBar({Key key, this.user, this.userName})
       : super(

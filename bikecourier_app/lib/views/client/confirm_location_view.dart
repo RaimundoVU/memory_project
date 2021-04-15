@@ -12,7 +12,7 @@ class ConfirmLocationView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ViewModelProvider<ConfirmLocationViewModel>.withConsumer(
-      viewModel: ConfirmLocationViewModel(),
+      viewModelBuilder: () => ConfirmLocationViewModel(),
       onModelReady: (model) {
         model.onCameraPosition(lat, lng);
       },

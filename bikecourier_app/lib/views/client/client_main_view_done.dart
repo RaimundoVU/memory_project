@@ -9,7 +9,7 @@ class ClientMainDoneView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ViewModelProvider<ClientMainViewModel>.withConsumer(
-      viewModel: ClientMainViewModel(),
+      viewModelBuilder: () => ClientMainViewModel(),
       onModelReady: (model) => model.listenToDoneDeliveries(model.currentUser.id),
       builder: (context, model, child) => Scaffold(
         body: Padding(

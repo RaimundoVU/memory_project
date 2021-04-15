@@ -2,12 +2,15 @@ import 'package:bikecourier_app/router.dart';
 import 'package:bikecourier_app/services/dialog_service.dart';
 import 'package:bikecourier_app/services/navigation_service.dart';
 import 'package:bikecourier_app/views/startup_view.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'locator.dart';
 import 'managers/dialog_manager.dart';
 import 'setup/login_view.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   setupLocator();
 
   runApp(MyApp());

@@ -4,7 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class MessengerMain extends StatefulWidget {
-  final FirebaseUser user;
+  final User user;
 
   final String userName;
   MessengerMain({Key key, this.user, this.userName});

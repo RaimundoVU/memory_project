@@ -8,7 +8,7 @@ class ConfigView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ViewModelProvider<ConfigViewModel>.withConsumer(
-        viewModel: ConfigViewModel(),
+        viewModelBuilder: () => ConfigViewModel(),
         builder: (context, model, child) => Scaffold(
               backgroundColor: Colors.white,
               appBar: AppBar(

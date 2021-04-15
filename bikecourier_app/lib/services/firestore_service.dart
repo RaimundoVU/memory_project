@@ -10,11 +10,11 @@ import '../locator.dart';
 
 class FirestoreService {
   final CollectionReference _userCollectionReference =
-      Firestore.instance.collection('users');
+      FirebaseFirestore.instance.collection('users');
   final CollectionReference _deliveryCollectionReference =
-      Firestore.instance.collection('delivery');
+      FirebaseFirestore.instance.collection('delivery');
   final CollectionReference _savedPlacesCollectionReference =
-      Firestore.instance.collection('savedPlaces');
+      FirebaseFirestore.instance.collection('savedPlaces');
 
   StreamController<List<Delivery>> _deliveryController =
       StreamController<List<Delivery>>.broadcast();
@@ -23,7 +23,7 @@ class FirestoreService {
 
   Future createUser(User user) async {
     try {
-      await _userCollectionReference.document(user.id).setData(user.toJson());
+      await _userCollectionReference.doc(user.id).set(user.toJson());
     } catch (e) {
       return e.message;
     }
@@ -31,8 +31,8 @@ class FirestoreService {
 
   Future getUser(String uid) async {
     try {
-      var userData = await _userCollectionReference.document(uid).get();
-      return User.fromData(userData.data);
+      var userData = await _userCollectionReference.doc(uid).get();
+      return User.fromData(userData.data());
     } catch (e) {
       return e.message;
     }
@@ -44,8 +44,8 @@ class FirestoreService {
   }) async {
     try {
       var user = await _userCollectionReference
-          .document(uid)
-          .updateData({'userRole': role});
+          .doc(uid)
+          .update({'userRole': role});
     } catch (e) {
       return e.message;
     }
@@ -59,8 +59,8 @@ class FirestoreService {
   }) async {
     try {
       var user = await _userCollectionReference
-          .document(uid)
-          .updateData({'phoneNumber': phoneNumber,
+          .doc(uid)
+          .update({'phoneNumber': phoneNumber,
           'fullName': fullName,
           'rut': rut});
       return true;
@@ -69,21 +69,21 @@ class FirestoreService {
     }
   }
 
-  Future getDeliveryOnceOff() async {
-    try {
-      var deliveryDocumentSnapshot =
-          await _deliveryCollectionReference.getDocuments();
-    } catch (e) {
-      return e.message;
-    }
-  }
+  // Future getDeliveryOnceOff() async {
+  //   try {
+  //     var deliveryDocumentSnapshot =
+  //         await _deliveryCollectionReference.getDocuments();
+  //   } catch (e) {
+  //     return e.message;
+  //   }
+  // }
 
   Stream listenToDeliveryRealTime(String id) {
     _deliveryCollectionReference.snapshots().listen((deliverySnapshot) {
-      if (deliverySnapshot.documents.isNotEmpty) {
-        var deliveries = deliverySnapshot.documents
+      if (deliverySnapshot.docs.isNotEmpty) {
+        var deliveries = deliverySnapshot.docs
             .map((delivery) =>
-                Delivery.fromMap(delivery.data, delivery.documentID))
+                Delivery.fromMap(delivery.data(), delivery.id))
             .where((element) =>
                 element.status != "DONE" && element.status != "CANCELED")
             .toList();
@@ -97,10 +97,10 @@ class FirestoreService {
 
     Stream listenToSavedPlaces(String id) {
     _savedPlacesCollectionReference.snapshots().listen((savedPlacesSnapshot) {
-      if (savedPlacesSnapshot.documents.isNotEmpty) {
-        var savedPlaces = savedPlacesSnapshot.documents
+      if (savedPlacesSnapshot.docs.isNotEmpty) {
+        var savedPlaces = savedPlacesSnapshot.docs
             .map((savedPlaces) =>
-                SavedPlaces.fromMap(savedPlaces.data, savedPlaces.documentID))
+                SavedPlaces.fromMap(savedPlaces.data(), savedPlaces.id))
             .toList();
 
         _savedPlacesController.add(savedPlaces);
@@ -112,10 +112,10 @@ class FirestoreService {
 
   Stream listenToDoneDeliveryRealTime(String id) {
     _deliveryCollectionReference.snapshots().listen((deliverySnapshot) {
-      if (deliverySnapshot.documents.isNotEmpty) {
-        var deliveries = deliverySnapshot.documents
+      if (deliverySnapshot.docs.isNotEmpty) {
+        var deliveries = deliverySnapshot.docs
             .map((delivery) =>
-                Delivery.fromMap(delivery.data, delivery.documentID))
+                Delivery.fromMap(delivery.data(), delivery.id))
             .where((element) =>
                 element.status == "DONE" || element.status == "CANCELED")
             .toList();
@@ -135,8 +135,8 @@ class FirestoreService {
         return false;
       }
       await _deliveryCollectionReference
-          .document()
-          .setData(delivery.toMap())
+          .doc()
+          .set(delivery.toMap())
           .toString();
       return true;
     } catch (e) {
@@ -145,7 +145,7 @@ class FirestoreService {
   }
 
   Future deleteDelivery(String documentId) async {
-    await _deliveryCollectionReference.document(documentId).delete();
+    await _deliveryCollectionReference.doc(documentId).delete();
   }
 
   Future addLocation(SavedPlaces place) async {
@@ -157,8 +157,8 @@ class FirestoreService {
         return false;
       }
       await _savedPlacesCollectionReference
-          .document()
-          .setData(place.toMap())
+          .doc()
+          .set(place.toMap())
           .toString();
       return true;
     } catch (e) {

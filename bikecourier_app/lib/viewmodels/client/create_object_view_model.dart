@@ -5,6 +5,8 @@ import 'package:bikecourier_app/services/firestore_service.dart';
 import 'package:bikecourier_app/services/navigation_service.dart';
 import 'package:bikecourier_app/viewmodels/base_model.dart';
 import 'package:flutter/foundation.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 import '../../locator.dart';
 
@@ -42,7 +44,17 @@ class CreateObjectViewModel extends BaseModel {
     _navigationService.popResult(object);
   }
 
-  void uploadImage() {
-    
+  void uploadImage() async {
+
+    final _picker = ImagePicker();
+    PickedFile image;
+    await Permission.photos.request();
+
+    var permissionStatus = await Permission.photos.status;
+    if (permissionStatus.isGranted) {
+      image = await _picker.getImage(source: ImageSource.camera);
+    } else {
+      print('Grant permissions and try again');
+    }
   }
 }

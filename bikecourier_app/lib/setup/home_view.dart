@@ -9,7 +9,7 @@ class HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ViewModelProvider<HomeViewModel>.withConsumer(
-      viewModel: HomeViewModel(),
+      viewModelBuilder: () => HomeViewModel(),
       builder: (context, model, child) => Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(

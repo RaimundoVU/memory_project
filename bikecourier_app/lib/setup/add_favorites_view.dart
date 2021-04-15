@@ -19,7 +19,7 @@ class AddFavoritesView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ViewModelProvider.withConsumer(
-        viewModel: AddFavoritesViewModel(),
+        viewModelBuilder: () => AddFavoritesViewModel(),
         builder: (context, model, child) => Scaffold(
               appBar: AppBar(
                 backgroundColor: Colors.black,

@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class SideDrawer extends StatefulWidget {
-  final FirebaseUser user;
+  final User user;
 
   const SideDrawer({Key key, this.user}) : super(key: key);
   @override

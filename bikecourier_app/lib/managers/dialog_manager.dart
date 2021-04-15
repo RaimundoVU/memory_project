@@ -6,7 +6,7 @@ import '../locator.dart';
 
 class DialogManager extends StatefulWidget {
   final Widget child;
-  DialogManager({Key key, this.child}) : super(key: key);
+  DialogManager({@required Key key, this.child}) : super(key: key);
 
   _DialogManagerState createState() => _DialogManagerState();
 }

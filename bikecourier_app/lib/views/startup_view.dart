@@ -1,12 +1,13 @@
 import 'package:bikecourier_app/viewmodels/startup_view_model.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:provider_architecture/viewmodel_provider.dart';
+import 'package:provider_architecture/provider_architecture.dart';
 
 class StartUpView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ViewModelProvider<StartUpViewModel>.withConsumer(
-        viewModel: StartUpViewModel(),
+        viewModelBuilder: () => StartUpViewModel(),
         onModelReady: (model) => model.handleStartUpLogic(),
         builder: (cotext, model, child) => Scaffold(
               backgroundColor: Colors.white,
@@ -26,5 +27,11 @@ class StartUpView extends StatelessWidget {
                 ),
               ),
             ));
+  }
+  Future<void> initializeDefault() async {
+    
+    FirebaseApp app = await Firebase.initializeApp();
+    assert(app != null);
+    print('Initialized default app $app');
   }
 }

@@ -8,7 +8,7 @@ class DeliveryView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ViewModelProvider.withConsumer(
-      viewModel: DeliveryViewModel(),
+      viewModelBuilder: () => DeliveryViewModel(),
       builder: (context, model, child) => Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.black,

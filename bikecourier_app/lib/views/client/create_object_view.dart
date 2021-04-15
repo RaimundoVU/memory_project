@@ -17,7 +17,7 @@ class CreateObjectView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ViewModelProvider.withConsumer(
-      viewModel: CreateObjectViewModel(),
+      viewModelBuilder: () => CreateObjectViewModel(),
       onModelReady: (model) {
         notesController.text = edittingObject?.info ?? '';
         model.setSelectedType(

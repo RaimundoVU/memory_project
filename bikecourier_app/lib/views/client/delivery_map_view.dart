@@ -2,7 +2,7 @@ import 'package:bikecourier_app/models/delivery.dart';
 import 'package:bikecourier_app/viewmodels/client/delivery_map_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:provider_architecture/viewmodel_provider.dart';
+import 'package:provider_architecture/provider_architecture.dart';
 
 class DeliveryMapView extends StatelessWidget {
   final Delivery delivery;
@@ -12,7 +12,7 @@ class DeliveryMapView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ViewModelProvider<DeliveryMapViewModel>.withConsumer(
-      viewModel: DeliveryMapViewModel(),
+      viewModelBuilder: () => DeliveryMapViewModel(),
       onModelReady: (model) {
         model.onCameraPosition();
       },

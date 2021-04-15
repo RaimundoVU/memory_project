@@ -17,9 +17,9 @@ class DialogService {
 
   /// Calls the dialog listener and returns a Future that will wait for dialogComplete.
   Future<DialogResponse> showDialog({
-    String title,
-    String description,
-    String buttonTitle = 'Ok',
+    @required String title,
+    @required String description,
+    @required String buttonTitle = 'Ok',
   }) {
     _dialogCompleter = Completer<DialogResponse>();
     _showDialogListener(DialogRequest(
@@ -32,10 +32,10 @@ class DialogService {
 
   /// Shows a confirmation dialog
   Future<DialogResponse> showConfirmationDialog(
-      {String title,
-      String description,
+      {@required String title,
+      @required String description,
       String confirmationTitle = 'Ok',
-      String cancelTitle = 'Cancel'}) {
+       String cancelTitle = 'Cancel'}) {
     _dialogCompleter = Completer<DialogResponse>();
     _showDialogListener(DialogRequest(
         title: title,

@@ -10,7 +10,7 @@ class EditFavoritesView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ViewModelProvider<EditFavoritesViewModel>.withConsumer(
-      viewModel: EditFavoritesViewModel(),
+     viewModelBuilder: () => EditFavoritesViewModel(),
       onModelReady: (model) => model.listenToSavedPlaces(model.currentUser.id),
       builder: (context, model, child) => Scaffold(
         appBar: AppBar(

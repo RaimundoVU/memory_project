@@ -19,7 +19,7 @@ class CreateEndView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ViewModelProvider.withConsumer(
-      viewModel: CreateEndViewModel(),
+      viewModelBuilder: () => CreateEndViewModel(),
       onModelReady: (model) {
         locationController.text = edittingEnd?.location ?? '';
         notesController.text = edittingEnd?.notes ?? '';

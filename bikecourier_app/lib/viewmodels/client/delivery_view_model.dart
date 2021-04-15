@@ -52,9 +52,15 @@ class DeliveryViewModel extends BaseModel {
   }
 
   Future addDelivery() async {
+    print('///////////////////////////////');
+    print(_start.toMap());
+    print(_end.toMap());
+    print('///////////////////////////////');
+
     setBusy(true);
     _delivery = Delivery(
         orderedBy: currentUser.id,
+        orderedByName: currentUser.fullName,
         status: 'WAITING',
         start: _start,
         end: _end,

@@ -54,11 +54,18 @@ class LoginView extends StatelessWidget {
                     ),
                     verticalSpaceMedium,
                     TextLink(
+                      'Olvidé mi contraseña',
+                      onPressed: () {
+                        model.navigateToResetPassword();
+                      },
+                    ),
+                    verticalSpaceSmall,
+                    TextLink(
                       'Crear una cuenta.',
                       onPressed: () {
                         model.navigateToSignUp();
                       },
-                    )
+                    ),
                   ],
                 ),
               ),

@@ -18,6 +18,8 @@ class FirestoreService {
 
   StreamController<List<Delivery>> _deliveryController =
       StreamController<List<Delivery>>.broadcast();
+  StreamController<List<SavedPlaces>> _savedPlacesController =
+      StreamController<List<SavedPlaces>>.broadcast();
 
   Future createUser(User user) async {
     try {
@@ -49,6 +51,24 @@ class FirestoreService {
     }
   }
 
+  Future editUser({
+    String uid,
+    String fullName,
+    String phoneNumber,
+    String rut,
+  }) async {
+    try {
+      var user = await _userCollectionReference
+          .document(uid)
+          .updateData({'phoneNumber': phoneNumber,
+          'fullName': fullName,
+          'rut': rut});
+      return true;
+    } catch (e) {
+      return e.message;
+    }
+  }
+
   Future getDeliveryOnceOff() async {
     try {
       var deliveryDocumentSnapshot =
@@ -73,6 +93,21 @@ class FirestoreService {
     });
 
     return _deliveryController.stream;
+  }
+
+    Stream listenToSavedPlaces(String id) {
+    _savedPlacesCollectionReference.snapshots().listen((savedPlacesSnapshot) {
+      if (savedPlacesSnapshot.documents.isNotEmpty) {
+        var savedPlaces = savedPlacesSnapshot.documents
+            .map((savedPlaces) =>
+                SavedPlaces.fromMap(savedPlaces.data, savedPlaces.documentID))
+            .toList();
+
+        _savedPlacesController.add(savedPlaces);
+      }
+    });
+
+    return _savedPlacesController.stream;
   }
 
   Stream listenToDoneDeliveryRealTime(String id) {

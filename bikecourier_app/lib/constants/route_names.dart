@@ -12,4 +12,8 @@ const String DeliveryMapViewRoute = "DeliveryMapView";
 const String ClientViewRoute = "ClientView";
 const String ConfigViewRoute = "ConfigView";
 const String AddFavoritesViewRoute = "AddFavoritesView";
+const String ChangePasswordViewRoute = "ChangePasswordView";
+const String ResetPasswordViewRoute = "ResetPasswordView";
+const String EditFavoritesViewRoute = "EditFavoritesView";
+const String EditProfileViewRoute = "EditProfileView";
 // Generate the views here

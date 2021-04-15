@@ -1,5 +1,6 @@
 import 'package:bikecourier_app/shared/shared_styles.dart';
 import 'package:bikecourier_app/shared/ui_helpers.dart';
+import 'package:dart_rut_validator/dart_rut_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'note_text.dart';
@@ -9,6 +10,7 @@ class InputField extends StatefulWidget {
   final TextInputType textInputType;
   final bool password;
   final bool isReadOnly;
+  final bool isRut;
   final String placeholder;
   final String validationMessage;
   final Function enterPressed;
@@ -32,6 +34,7 @@ class InputField extends StatefulWidget {
       this.validationMessage,
       this.textInputAction = TextInputAction.next,
       this.textInputType = TextInputType.text,
+      this.isRut = false,
       this.password = false,
       this.isReadOnly = false,
       this.smallVersion = false});

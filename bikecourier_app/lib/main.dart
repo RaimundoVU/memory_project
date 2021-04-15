@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Bikecourier',
+      title: 'Courier App',
       debugShowCheckedModeBanner: false,
       builder: (context, child) => Navigator(
         key: locator<DialogService>().dialogNavigationKey,

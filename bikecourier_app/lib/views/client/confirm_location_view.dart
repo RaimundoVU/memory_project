@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider_architecture/provider_architecture.dart';
 
+
 class ConfirmLocationView extends StatelessWidget {
   String type;
   double lat;

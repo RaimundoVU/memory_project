@@ -10,7 +10,7 @@ class CustomAppBar extends AppBar {
           iconTheme: new IconThemeData(color: Colors.black),
           backgroundColor: Color.fromRGBO(255, 251, 193, 1.0),
           title: Text(
-            'Biendenid@, ${userName}',
+            'Bienvenid@, ${userName}',
             style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 20.0,

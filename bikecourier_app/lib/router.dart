@@ -3,9 +3,13 @@ import 'package:bikecourier_app/models/delivery.dart';
 import 'package:bikecourier_app/models/delivery_location.dart';
 import 'package:bikecourier_app/models/delivery_object.dart';
 import 'package:bikecourier_app/setup/add_favorites_view.dart';
+import 'package:bikecourier_app/setup/change_password_view.dart';
 import 'package:bikecourier_app/setup/config_view.dart';
+import 'package:bikecourier_app/setup/edit_favorites_view.dart';
+import 'package:bikecourier_app/setup/edit_profile_view.dart';
 import 'package:bikecourier_app/setup/home_view.dart';
 import 'package:bikecourier_app/setup/login_view.dart';
+import 'package:bikecourier_app/setup/reset_password_view.dart';
 import 'package:bikecourier_app/setup/signup_view.dart';
 import 'package:bikecourier_app/views/client/client_main_view.dart';
 import 'package:bikecourier_app/views/client/client_view.dart';
@@ -16,6 +20,7 @@ import 'package:bikecourier_app/views/client/delivery_map_view.dart';
 import 'package:bikecourier_app/views/client/delivery_view.dart';
 import 'package:flutter/material.dart';
 
+import 'models/user.dart';
 import 'views/client/confirm_location_view.dart';
 
 Route<dynamic> generateRoute(RouteSettings settings) {
@@ -102,6 +107,29 @@ Route<dynamic> generateRoute(RouteSettings settings) {
         return _getPageRoute(
           routeName: settings.name,
           viewToShow: AddFavoritesView()
+        );
+    case ChangePasswordViewRoute:
+        return _getPageRoute(
+          routeName: settings.name,
+          viewToShow: ChangePasswordView()
+        );
+    case ResetPasswordViewRoute:
+        return _getPageRoute(
+          routeName: settings.name,
+          viewToShow: ResetPasswordView()
+        );
+    case EditFavoritesViewRoute:
+        return _getPageRoute(
+          routeName: settings.name,
+          viewToShow: EditFavoritesView()
+        );
+    case EditProfileViewRoute:
+        var user = settings.arguments as User;
+        return _getPageRoute(
+          routeName: settings.name,
+          viewToShow: EditProfileView(
+            edittingUser: user,
+          )
         );
     default:
       return MaterialPageRoute(

@@ -11,6 +11,7 @@ import 'package:provider_architecture/provider_architecture.dart';
 class CreateObjectView extends StatelessWidget {
   final notesController = TextEditingController();
   final DeliveryObject edittingObject;
+  String imageUrl;
 
   CreateObjectView({Key key, this.edittingObject}) : super(key: key);
   @override
@@ -75,6 +76,16 @@ class CreateObjectView extends StatelessWidget {
                         'Puntos de referencia, por quién preguntar, etc.',
                   ),
                   verticalSpaceMedium,
+                  Column(
+                    children: [
+                      (imageUrl != null) 
+                      ? Image.network(imageUrl)
+                      : Placeholder(fallbackHeight: 200.0, fallbackWidth: double.infinity,),
+                      RaisedButton(
+                        child: Text('Subir imagen'),
+                        onPressed: () {})
+                    ],
+                  ),
                   Row(
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.center,

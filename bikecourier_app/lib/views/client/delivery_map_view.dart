@@ -23,6 +23,7 @@ class DeliveryMapView extends StatelessWidget {
         ),
         body: GoogleMap(
           initialCameraPosition: model.cameraPosition,
+          polylines: Set<Polyline>.of(model.polylines.values),
           mapType: MapType.normal,
           onMapCreated: (controller) => model.onMapCreated(controller, delivery),
           markers: model.markers,

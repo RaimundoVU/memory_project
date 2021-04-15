@@ -19,7 +19,8 @@ class ConfirmLocationViewModel extends BaseModel {
   GoogleMapController get controller => _controller;
   Set<Marker> get markers => _markers;
 
-  void onMapCreated(GoogleMapController controller, String type, double lat, double lng) async {
+  void onMapCreated(GoogleMapController controller, String type, double lat,
+      double lng) async {
     String title;
     String snippet;
     setBusy(true);
@@ -46,17 +47,47 @@ class ConfirmLocationViewModel extends BaseModel {
 
   void onCameraPosition(double lat, double lng) async {
     setBusy(true);
-    _cameraPosition = CameraPosition(
-        target: new LatLng(lat, lng),
-        zoom: 15);
+    _cameraPosition = CameraPosition(target: new LatLng(lat, lng), zoom: 14.467);
     setBusy(false);
+  }
+
+  void handleTap(LatLng cordinate, String type ) {
+    String title;
+    String snippet;
+       if (type == "start") {
+      title = "Ubicación de Origen";
+      snippet = "Desde aquí comienza la encomienda";
+    } else {
+      title = "Ubicación de Destino";
+      snippet = "Aquí termina la encomienda";
+    }
+    print(' tappde point????????????????');
+    print(cordinate.latitude);
+    print(cordinate.longitude);
+    print('????????????????');
+    _markers.clear();
+    _markers.add(
+       Marker(
+          draggable: true,
+          markerId: MarkerId("0"),
+          position: cordinate,
+          onDragEnd: ((value) {
+            print("locationdrag: " + value.latitude.toString());
+          }),
+          infoWindow: InfoWindow(title: title, snippet: snippet)),
+    );
+    
   }
 
   void submit() async {
     setBusy(true);
-    var userLocation = await _locationService.getLocation();
+    var userLocation = _markers.first.position;
     setBusy(false);
-    print(userLocation);
+    print('????????????????');
+    print(userLocation.latitude);
+    print(userLocation.longitude);
+    print('????????????????');
+
     _navigationService.popResult(userLocation);
   }
 }

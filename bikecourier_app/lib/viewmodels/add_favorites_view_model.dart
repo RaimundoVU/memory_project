@@ -21,7 +21,7 @@ class AddFavoritesViewModel extends BaseModel {
     print('###');
     setBusy(true);
     SavedPlaces savePlace =
-        SavedPlaces(location: location, name: name, lat: place.lat, lng: place.lng);
+        SavedPlaces(location: location, name: name, lat: place.lat, lng: place.lng, userId: currentUser.id);
     var result = await _firestoreService.addLocation(savePlace);
     setBusy(false);
     if (result is String) {
@@ -29,7 +29,7 @@ class AddFavoritesViewModel extends BaseModel {
           title: 'No se puedo guardar la ubicación favorita', description: result);
     } else {
       await _dialogService.showDialog(
-          title: 'Se guradó tu ubicación',
+          title: 'Se guardó tu ubicación',
           description: 'Se guardó de manera satisfactoria tu ubicación :)');
     }
 

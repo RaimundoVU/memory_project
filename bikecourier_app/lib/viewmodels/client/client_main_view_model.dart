@@ -20,7 +20,6 @@ class ClientMainViewModel extends BaseModel {
   List<Delivery> _deliveries;
   List<Delivery> get deliveries => _deliveries;
 
-
   void listenToDeliveries(String uid) {
     setBusy(true);
     _firestoreService.listenToDeliveryRealTime(uid).listen((deliveryData) {
@@ -29,8 +28,8 @@ class ClientMainViewModel extends BaseModel {
         _deliveries = updatedDeliveries;
         notifyListeners();
       }
-     });
-     setBusy(false);
+    });
+    setBusy(false);
   }
 
   void listenToDoneDeliveries(String uid) {
@@ -41,17 +40,17 @@ class ClientMainViewModel extends BaseModel {
         _deliveries = updatedDeliveries;
         notifyListeners();
       }
-     });
-     setBusy(false);
+    });
+    setBusy(false);
   }
 
   Future deleteDelivery(int index) async {
     var dialogResponse = await _dialogService.showConfirmationDialog(
-      title: '¿Estás seguro?',
-      description: 'Se eliminará esta encomienda para siempre. ¿Quieres continuar?',
-      confirmationTitle: 'Sí',
-      cancelTitle: 'No'
-    );
+        title: '¿Estás seguro?',
+        description:
+            'Se eliminará esta encomienda para siempre. ¿Quieres continuar?',
+        confirmationTitle: 'Sí',
+        cancelTitle: 'No');
 
     if (dialogResponse.confirmed) {
       setBusy(true);
@@ -59,12 +58,27 @@ class ClientMainViewModel extends BaseModel {
       setBusy(false);
     }
   }
+
   navigateToCreateDelivery() async {
-    _navigationService.navigateTo(DeliveryViewRoute);
+    if (currentUser.rut == null) {
+      await _dialogService.showDialog(
+          title: 'Usted aún no ha completado su perfil.',
+          description:
+              'Necesita ingresar su rut, debe dirigirse Configuración > Editar Perfil',);
+    }
+    if (currentUser.phoneNumber == null) {
+       await _dialogService.showDialog(
+          title: 'Usted aún no ha completado su perfil.',
+          description:
+              'Necesita ingresar su número de télefono, debe dirigirse Configuración > Editar Perfil',
+       );
+    } else {
+      _navigationService.navigateTo(DeliveryViewRoute);
+    }
   }
 
-  goToMap(int index) async{ 
-
-    _navigationService.navigateTo(DeliveryMapViewRoute, arguments: _deliveries[index]);
+  goToMap(int index) async {
+    _navigationService.navigateTo(DeliveryMapViewRoute,
+        arguments: _deliveries[index]);
   }
 }

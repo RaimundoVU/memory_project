@@ -4,6 +4,7 @@ import 'package:bikecourier_app/models/delivery_object.dart';
 class Delivery {
   final String status;
   final String orderedBy;
+  final String orderedByName;
   final String deliveredBy;
   final String documentId;
 
@@ -15,6 +16,7 @@ class Delivery {
       {this.status,
       this.orderedBy,
       this.deliveredBy,
+      this.orderedByName,
       this.start,
       this.end,
       this.object,
@@ -24,6 +26,7 @@ class Delivery {
     return {
       'status': status,
       'orderedBy': orderedBy,
+      'orderedByName': orderedByName,
       'deliveredBy': deliveredBy,
       'start': start.toMap(),
       'end': end.toMap(),
@@ -39,6 +42,7 @@ class Delivery {
       status: map['status'],
       orderedBy: map['orderedBy'],
       deliveredBy: map['deliveredBy'],
+      orderedByName: map['orderedByName'],
       start: DeliveryLocation.fromMap(map['start']),
       end: DeliveryLocation.fromMap(map['end']),
       object: DeliveryObject.fromMap(map['object']),

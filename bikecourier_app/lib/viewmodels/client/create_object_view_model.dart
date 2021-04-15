@@ -41,4 +41,8 @@ class CreateObjectViewModel extends BaseModel {
     DeliveryObject object = DeliveryObject(type: _selectedType, size: _selectedSize,info: notes);
     _navigationService.popResult(object);
   }
+
+  void uploadImage() {
+    
+  }
 }

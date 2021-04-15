@@ -28,7 +28,7 @@ class LoginViewModel extends BaseModel {
 
     if (result is bool) {
       if (result) {
-        _navigationService.navigateTo(HomeViewRoute);
+        _navigationService.navigateTo(ClientViewRoute);
       } else {
         await _dialogService.showDialog(
           title: 'El inicio de sesión ha fallado',
@@ -45,5 +45,9 @@ class LoginViewModel extends BaseModel {
 
   navigateToSignUp() {
     _navigationService.navigateTo(SignUpViewRoute);
+  }
+
+  navigateToResetPassword() {
+    _navigationService.navigateTo(ResetPasswordViewRoute);
   }
 }

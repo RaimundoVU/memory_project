@@ -4,7 +4,7 @@ import 'package:bikecourier_app/viewmodels/signup_view_model.dart';
 import 'package:bikecourier_app/widgets/busy_button.dart';
 import 'package:bikecourier_app/widgets/input_field.dart';
 import 'package:flutter/material.dart';
-import 'package:provider_architecture/provider_architecture.dart';
+import 'package:stacked/stacked.dart';
 
 class SignUpView extends StatelessWidget {
   final emailController = TextEditingController();
@@ -14,7 +14,7 @@ class SignUpView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ViewModelProvider<SignUpViewModel>.withConsumer(
+    return ViewModelBuilder<SignUpViewModel>.reactive(
       viewModelBuilder: () => SignUpViewModel(),
       builder: (context, model, child) => Scaffold(
         backgroundColor: Colors.white,

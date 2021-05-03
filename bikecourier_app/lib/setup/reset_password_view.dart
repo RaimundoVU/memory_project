@@ -3,13 +3,13 @@ import 'package:bikecourier_app/viewmodels/reset_password_view_model.dart';
 import 'package:bikecourier_app/widgets/busy_button.dart';
 import 'package:bikecourier_app/widgets/input_field.dart';
 import 'package:flutter/material.dart';
-import 'package:provider_architecture/provider_architecture.dart';
+import 'package:stacked/stacked.dart';
 
 class ResetPasswordView extends StatelessWidget {
   final emailController = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    return ViewModelProvider.withConsumer(
+    return ViewModelBuilder.reactive(
         viewModelBuilder: () => ResetPasswordViewModel(),
         builder: (context, model, child) => Scaffold(
               appBar: AppBar(

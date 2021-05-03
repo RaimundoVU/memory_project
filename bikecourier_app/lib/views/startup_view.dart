@@ -1,12 +1,12 @@
 import 'package:bikecourier_app/viewmodels/startup_view_model.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:provider_architecture/provider_architecture.dart';
+import 'package:stacked/stacked.dart';
 
 class StartUpView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ViewModelProvider<StartUpViewModel>.withConsumer(
+    return ViewModelBuilder<StartUpViewModel>.reactive(
         viewModelBuilder: () => StartUpViewModel(),
         onModelReady: (model) => model.handleStartUpLogic(),
         builder: (cotext, model, child) => Scaffold(

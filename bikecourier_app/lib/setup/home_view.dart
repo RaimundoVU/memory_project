@@ -3,12 +3,12 @@ import 'package:bikecourier_app/viewmodels/home_view_model.dart';
 import 'package:bikecourier_app/widgets/app_drawer.dart';
 import 'package:bikecourier_app/widgets/home_card.dart';
 import 'package:flutter/material.dart';
-import 'package:provider_architecture/provider_architecture.dart';
+import 'package:stacked/stacked.dart';
 
 class HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ViewModelProvider<HomeViewModel>.withConsumer(
+    return ViewModelBuilder<HomeViewModel>.reactive(
       viewModelBuilder: () => HomeViewModel(),
       builder: (context, model, child) => Scaffold(
         backgroundColor: Colors.white,

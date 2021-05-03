@@ -2,12 +2,12 @@ import 'package:bikecourier_app/viewmodels/config_view_model.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter/material.dart';
-import 'package:provider_architecture/provider_architecture.dart';
+import 'package:stacked/stacked.dart';
 
 class ConfigView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ViewModelProvider<ConfigViewModel>.withConsumer(
+    return ViewModelBuilder<ConfigViewModel>.reactive(
         viewModelBuilder: () => ConfigViewModel(),
         builder: (context, model, child) => Scaffold(
               backgroundColor: Colors.white,

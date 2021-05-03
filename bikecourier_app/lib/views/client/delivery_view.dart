@@ -2,12 +2,12 @@ import 'package:bikecourier_app/shared/ui_helpers.dart';
 import 'package:bikecourier_app/viewmodels/client/delivery_view_model.dart';
 import 'package:bikecourier_app/widgets/busy_button.dart';
 import 'package:flutter/material.dart';
-import 'package:provider_architecture/provider_architecture.dart';
+import 'package:stacked/stacked.dart';
 
 class DeliveryView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ViewModelProvider.withConsumer(
+    return ViewModelBuilder.reactive(
       viewModelBuilder: () => DeliveryViewModel(),
       builder: (context, model, child) => Scaffold(
         appBar: AppBar(

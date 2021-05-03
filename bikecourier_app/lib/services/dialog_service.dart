@@ -19,7 +19,7 @@ class DialogService {
   Future<DialogResponse> showDialog({
     @required String title,
     @required String description,
-    @required String buttonTitle = 'Ok',
+    String buttonTitle = 'Ok',
   }) {
     _dialogCompleter = Completer<DialogResponse>();
     _showDialogListener(DialogRequest(

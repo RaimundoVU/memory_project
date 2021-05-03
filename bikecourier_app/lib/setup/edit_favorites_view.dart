@@ -4,12 +4,12 @@ import 'package:bikecourier_app/widgets/app_drawer.dart';
 import 'package:bikecourier_app/widgets/delivery_item.dart';
 import 'package:bikecourier_app/widgets/saved_place_item.dart';
 import 'package:flutter/material.dart';
-import 'package:provider_architecture/provider_architecture.dart';
+import 'package:stacked/stacked.dart';
 
 class EditFavoritesView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ViewModelProvider<EditFavoritesViewModel>.withConsumer(
+    return ViewModelBuilder<EditFavoritesViewModel>.reactive(
      viewModelBuilder: () => EditFavoritesViewModel(),
       onModelReady: (model) => model.listenToSavedPlaces(model.currentUser.id),
       builder: (context, model, child) => Scaffold(

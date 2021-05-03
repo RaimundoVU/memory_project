@@ -8,8 +8,7 @@ import 'package:bikecourier_app/widgets/busy_button.dart';
 import 'package:bikecourier_app/widgets/input_field.dart';
 import 'package:bikecourier_app/widgets/search_field.dart';
 import 'package:flutter/material.dart';
-import 'package:provider_architecture/provider_architecture.dart';
-
+import 'package:stacked/stacked.dart';
 import '../locator.dart';
 
 class AddFavoritesView extends StatelessWidget {
@@ -18,7 +17,7 @@ class AddFavoritesView extends StatelessWidget {
   final _place = Place();
   @override
   Widget build(BuildContext context) {
-    return ViewModelProvider.withConsumer(
+    return ViewModelBuilder.reactive(
         viewModelBuilder: () => AddFavoritesViewModel(),
         builder: (context, model, child) => Scaffold(
               appBar: AppBar(

@@ -3,12 +3,12 @@ import 'package:bikecourier_app/viewmodels/client/client_main_view_model.dart';
 import 'package:bikecourier_app/widgets/app_drawer.dart';
 import 'package:bikecourier_app/widgets/delivery_item.dart';
 import 'package:flutter/material.dart';
-import 'package:provider_architecture/provider_architecture.dart';
+import 'package:stacked/stacked.dart';
 
 class ClientMainView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ViewModelProvider<ClientMainViewModel>.withConsumer(
+    return ViewModelBuilder<ClientMainViewModel>.reactive(
       viewModelBuilder: () => ClientMainViewModel(),
       onModelReady: (model) => model.listenToDeliveries(model.currentUser.id),
       builder: (context, model, child) => Scaffold(

@@ -1,7 +1,7 @@
 import 'package:bikecourier_app/viewmodels/client/confirm_location_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:provider_architecture/provider_architecture.dart';
+import 'package:stacked/stacked.dart';
 
 
 class ConfirmLocationView extends StatelessWidget {
@@ -11,7 +11,7 @@ class ConfirmLocationView extends StatelessWidget {
   ConfirmLocationView({this.type, this.lat, this.lng});
   @override
   Widget build(BuildContext context) {
-    return ViewModelProvider<ConfirmLocationViewModel>.withConsumer(
+    return ViewModelBuilder<ConfirmLocationViewModel>.reactive(
       viewModelBuilder: () => ConfirmLocationViewModel(),
       onModelReady: (model) {
         model.onCameraPosition(lat, lng);
@@ -28,6 +28,7 @@ class ConfirmLocationView extends StatelessWidget {
           markers: model.markers,
           onTap: (cordinate) {
             model.controller.animateCamera(CameraUpdate.newLatLng(cordinate));
+            model.handleTap(cordinate, type);
           },
         ),
         floatingActionButton: FloatingActionButton(

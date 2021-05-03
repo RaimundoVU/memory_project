@@ -61,10 +61,6 @@ class ConfirmLocationViewModel extends BaseModel {
       title = "Ubicación de Destino";
       snippet = "Aquí termina la encomienda";
     }
-    print(' tappde point????????????????');
-    print(cordinate.latitude);
-    print(cordinate.longitude);
-    print('????????????????');
     _markers.clear();
     _markers.add(
        Marker(
@@ -76,7 +72,7 @@ class ConfirmLocationViewModel extends BaseModel {
           }),
           infoWindow: InfoWindow(title: title, snippet: snippet)),
     );
-    
+    notifyListeners();
   }
 
   void submit() async {

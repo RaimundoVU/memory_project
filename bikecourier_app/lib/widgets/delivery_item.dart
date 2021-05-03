@@ -4,12 +4,12 @@ import 'package:flutter/material.dart';
 class DeliveryItem extends StatelessWidget {
   final Delivery delivery;
   final Function onDeleteDelivery;
-  const DeliveryItem({Key key, this.delivery, this.onDeleteDelivery}) : super(key: key);
+  const DeliveryItem({Key key, this.delivery, this.onDeleteDelivery})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 100,
       margin: const EdgeInsets.only(top: 20),
       alignment: Alignment.center,
       child: Row(
@@ -24,7 +24,9 @@ class DeliveryItem extends StatelessWidget {
                 Text('Origen: ' + delivery.start.location),
                 Text('Destino: ' + delivery.end.location),
                 Text('Tipo de Objeto: ' + delivery.object.type),
-                getText(delivery.status)
+                Container(
+                  child: getText(delivery.status),
+                )
               ],
             ),
           )),
@@ -49,21 +51,36 @@ class DeliveryItem extends StatelessWidget {
 
   Widget getText(String status) {
     if (status == "WAITING") {
-      return Text(
-        "EN ESPERA",
-        style: TextStyle(color: Colors.yellow),
+      return Chip(
+          backgroundColor: Color(0xFF5f65d3),
+          padding: EdgeInsets.symmetric(vertical: 1.0, horizontal: 5.0),
+          label: Text(
+            "EN ESPERA",
+            style: TextStyle(color: Colors.white,),
+            textAlign: TextAlign.center,
+          )
       );
     }
     if (status == "CANCELED") {
-      return Text(
-        "CANCELADO",
-        style: TextStyle(color: Colors.red)
+      return Chip(
+          backgroundColor: Color(0xFFff6666),
+          padding: EdgeInsets.symmetric(vertical: 1.0, horizontal: 5.0),
+          label: Text(
+            "CANCELADO",
+            style: TextStyle(color: Colors.white,),
+            textAlign: TextAlign.center,
+          )
       );
     }
     if (status == "DONE") {
-      return Text(
-        "COMPLETADO",
-        style: TextStyle(color: Colors.green)
+      return Chip(
+          backgroundColor: Color(0xFF19ca21),
+          padding: EdgeInsets.symmetric(vertical: 1.0, horizontal: 5.0),
+          label: Text(
+            "COMPLETADO",
+            style: TextStyle(color: Colors.white,),
+            textAlign: TextAlign.center,
+          )
       );
     }
   }

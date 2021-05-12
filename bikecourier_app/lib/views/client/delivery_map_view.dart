@@ -14,7 +14,8 @@ class DeliveryMapView extends StatelessWidget {
     return ViewModelBuilder<DeliveryMapViewModel>.reactive(
       viewModelBuilder: () => DeliveryMapViewModel(),
       onModelReady: (model) {
-        model.onCameraPosition();
+        model.onCameraPosition(delivery);
+        model.listenToPositionChanges(delivery);
       },
       builder: (context, model, child) => Scaffold(
         appBar: AppBar(
@@ -29,6 +30,7 @@ class DeliveryMapView extends StatelessWidget {
           markers: model.markers,
           onTap: (cordinate) {
             model.controller.animateCamera(CameraUpdate.newLatLng(cordinate));
+            model.listenToPositionChanges(delivery);
           },
         ),
         floatingActionButton: FloatingActionButton(

@@ -1,6 +1,7 @@
 import 'dart:collection';
 
 import 'package:bikecourier_app/models/delivery.dart';
+import 'package:bikecourier_app/services/firestore_service.dart';
 import 'package:bikecourier_app/services/location_service.dart';
 import 'package:bikecourier_app/services/navigation_service.dart';
 import 'package:bikecourier_app/viewmodels/base_model.dart';
@@ -15,6 +16,7 @@ class DeliveryMapViewModel extends BaseModel {
   Set<Marker> _markers = HashSet<Marker>();
   LocationService _locationService = locator<LocationService>();
   NavigationService _navigationService = locator<NavigationService>();
+  FirestoreService _firestoreService = locator<FirestoreService>();
 
   PolylinePoints polylinePoints;
 
@@ -26,7 +28,6 @@ class DeliveryMapViewModel extends BaseModel {
   GoogleMapController get controller => _controller;
   Set<Marker> get markers => _markers;
   Map<PolylineId, Polyline> get polylines => _polylines;
-
 
   void onMapCreated(GoogleMapController controller, Delivery delivery) async {
     setBusy(true);
@@ -60,13 +61,43 @@ class DeliveryMapViewModel extends BaseModel {
     setBusy(false);
   }
 
-  void onCameraPosition() async {
+  void onCameraPosition(Delivery delivery) async {
     setBusy(true);
-    var currentLocation = await _locationService.getLocation();
     _cameraPosition = CameraPosition(
-        target: new LatLng(currentLocation.latitude, currentLocation.longitude),
+        target: new LatLng(delivery.start.lat, delivery.start.lng),
         zoom: 15);
     setBusy(false);
+  }
+
+  void listenToPositionChanges(Delivery delivery) async {
+    var newDelivery = await _firestoreService.getDelivery(delivery.documentId);
+    _markers.clear();
+    _markers.add(
+      Marker(
+          draggable: true,
+          markerId: MarkerId("start"),
+          position: LatLng(newDelivery.start.lat, newDelivery.start.lng),
+          onDragEnd: ((value) {
+            print("locationdrag: " + value.latitude.toString());
+          }),
+          infoWindow: InfoWindow(
+              title: 'Ubicación de origen',
+              snippet: 'Aquí comienza la encomienda')),
+    );
+    _markers.add(
+      Marker(
+          draggable: true,
+          markerId: MarkerId("end"),
+          position: LatLng(delivery.end.lat, delivery.end.lng),
+          onDragEnd: ((value) {
+            print("locationdrag: " + value.latitude.toString());
+          }),
+          infoWindow: InfoWindow(
+              title: 'Ubicación de destino',
+              snippet: 'Aquí termina la encomienda')),
+    );
+    notifyListeners();
+    //controller.animateCamera();
   }
 
   void submit() async {
@@ -74,36 +105,36 @@ class DeliveryMapViewModel extends BaseModel {
   }
 
   void _createPolylines(Delivery delivery) async {
-  // Initializing PolylinePoints
-  polylinePoints = PolylinePoints();
+    // Initializing PolylinePoints
+    polylinePoints = PolylinePoints();
 
-  // Generating the list of coordinates to be used for
-  // drawing the polylines
-  PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
-    "AIzaSyDdsRv69Vj2zLIoYCDt62AtB7JDvOU-HH8", // Google Maps API Key
-    PointLatLng(delivery.start.lat, delivery.start.lng),
-    PointLatLng(delivery.end.lat, delivery.end.lng),
-    travelMode: TravelMode.transit,
-  );
+    // Generating the list of coordinates to be used for
+    // drawing the polylines
+    PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
+      "AIzaSyDdsRv69Vj2zLIoYCDt62AtB7JDvOU-HH8", // Google Maps API Key
+      PointLatLng(delivery.start.lat, delivery.start.lng),
+      PointLatLng(delivery.end.lat, delivery.end.lng),
+      travelMode: TravelMode.transit,
+    );
 
-  // Adding the coordinates to the list
-  if (result.points.isNotEmpty) {
-    result.points.forEach((PointLatLng point) {
-      polylineCoordinates.add(LatLng(point.latitude, point.longitude));
-    });
+    // Adding the coordinates to the list
+    if (result.points.isNotEmpty) {
+      result.points.forEach((PointLatLng point) {
+        polylineCoordinates.add(LatLng(point.latitude, point.longitude));
+      });
+    }
+
+    // Defining an ID
+    PolylineId id = PolylineId('poly');
+
+    // Initializing Polyline
+    Polyline polyline = Polyline(
+      polylineId: id,
+      color: Colors.red,
+      points: polylineCoordinates,
+      width: 3,
+    );
+    // Adding the polyline to the map
+    _polylines[id] = polyline;
   }
-
-  // Defining an ID
-  PolylineId id = PolylineId('poly');
-
-  // Initializing Polyline
-  Polyline polyline = Polyline(
-    polylineId: id,
-    color: Colors.red,
-    points: polylineCoordinates,
-    width: 3,
-  );
-  // Adding the polyline to the map
-  _polylines[id] = polyline;
-}
 }

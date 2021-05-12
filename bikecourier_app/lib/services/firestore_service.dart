@@ -148,6 +148,18 @@ class FirestoreService {
     await _deliveryCollectionReference.doc(documentId).delete();
   }
 
+  getDelivery(String documentId) async {
+     try {
+      var deliveryData = await _deliveryCollectionReference.doc(documentId).get();
+      var delivery = Delivery.fromMap(deliveryData.data(), documentId);
+      print("???");
+      print(delivery.toMap());
+      return delivery;
+    } catch (e) {
+      return e.message;
+    }
+  }
+
   Future addLocation(SavedPlaces place) async {
     try {
       if (place.name == null ||

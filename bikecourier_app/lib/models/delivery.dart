@@ -34,6 +34,13 @@ class Delivery {
     };
   }
 
+  Map<String, double> position() {
+    return {
+      'latitude': this.start.lat,
+      'longitude': this.start.lng
+    };
+  }
+
   static Delivery fromMap(Map<String, dynamic> map, String documentId) {
     if (map == null) return null;
     // print(map['start']);

@@ -51,6 +51,19 @@ class FirestoreService {
     }
   }
 
+  Future addDeviceId({
+    String uid,
+    String deviceId
+  }) async {
+    try {
+      var user = await _userCollectionReference
+          .doc(uid)
+          .update({'deviceId': deviceId});
+    } catch (e) {
+      return e.message;
+    }
+  }
+
   Future editUser({
     String uid,
     String fullName,
@@ -79,7 +92,7 @@ class FirestoreService {
   // }
 
   Stream listenToDeliveryRealTime(String id) {
-    _deliveryCollectionReference.snapshots().listen((deliverySnapshot) {
+    _deliveryCollectionReference.where("orderedBy", isEqualTo: id).snapshots().listen((deliverySnapshot) {
       if (deliverySnapshot.docs.isNotEmpty) {
         var deliveries = deliverySnapshot.docs
             .map((delivery) =>
@@ -96,7 +109,7 @@ class FirestoreService {
   }
 
     Stream listenToSavedPlaces(String id) {
-    _savedPlacesCollectionReference.snapshots().listen((savedPlacesSnapshot) {
+    _savedPlacesCollectionReference.where("orderedBy", isEqualTo: id).snapshots().listen((savedPlacesSnapshot) {
       if (savedPlacesSnapshot.docs.isNotEmpty) {
         var savedPlaces = savedPlacesSnapshot.docs
             .map((savedPlaces) =>
@@ -111,7 +124,7 @@ class FirestoreService {
   }
 
   Stream listenToDoneDeliveryRealTime(String id) {
-    _deliveryCollectionReference.snapshots().listen((deliverySnapshot) {
+    _deliveryCollectionReference.where("orderedBy", isNotEqualTo: id).snapshots().listen((deliverySnapshot) {
       if (deliverySnapshot.docs.isNotEmpty) {
         var deliveries = deliverySnapshot.docs
             .map((delivery) =>
@@ -148,6 +161,18 @@ class FirestoreService {
     await _deliveryCollectionReference.doc(documentId).delete();
   }
 
+  getDelivery(String documentId) async {
+     try {
+      var deliveryData = await _deliveryCollectionReference.doc(documentId).get();
+      var delivery = Delivery.fromMap(deliveryData.data(), documentId);
+      print("???");
+      print(delivery.toMap());
+      return delivery;
+    } catch (e) {
+      return e.message;
+    }
+  }
+
   Future addLocation(SavedPlaces place) async {
     try {
       if (place.name == null ||
@@ -166,3 +191,4 @@ class FirestoreService {
     }
   }
 }
+

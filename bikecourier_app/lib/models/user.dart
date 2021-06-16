@@ -5,10 +5,11 @@ class User {
   final String rut;
   final String phoneNumber;
   final String userRole;
+  final String deviceId;
   final double currentLat;
   final double currentLng;
 
-  User({this.id, this.rut, this.phoneNumber, this.fullName, this.email, this.userRole, this.currentLat, this.currentLng});
+  User({this.id, this.rut, this.phoneNumber, this.fullName, this.email, this.userRole, this.currentLat, this.currentLng, this.deviceId});
 
   User.fromData(Map<String, dynamic> data)
       : id = data['id'],
@@ -18,7 +19,9 @@ class User {
         email = data['email'],
         userRole = data['userRole'],
         currentLat = data['currentLat'],
-        currentLng = data['currentLng'];
+        currentLng = data['currentLng'],
+        deviceId = data['deviceId'];
+
 
   Map<String, dynamic> toJson() {
     return {
@@ -30,6 +33,7 @@ class User {
       'userRole' : userRole,
       'currentLat' : currentLat,
       'currentLng' : currentLng,
+      'deviceId': deviceId
     };
   }
 

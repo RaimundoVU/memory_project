@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "216813303400",
+    "firebase_url": "https://bikecourierapp.firebaseio.com",
+    "project_id": "bikecourierapp",
+    "storage_bucket": "bikecourierapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:216813303400:android:2e70ff8b088ecb8069addd",
+        "android_client_info": {
+          "package_name": "com.example.bikecourier_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "216813303400-kuuhvs5cd5rtpqm5ed9qfaptmn1osoh7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.bikecourier_app",
+            "certificate_hash": "5311f6eef3e01072087d7dfbfd2dc5e698954144"
+          }
+        },
+        {
+          "client_id": "216813303400-guud0hiktr6s9qge1olm301b0iio53oc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAapy9TUY3uucgH1j6QxqJtLWogXZ8sr3Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "216813303400-guud0hiktr6s9qge1olm301b0iio53oc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

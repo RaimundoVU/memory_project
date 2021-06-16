@@ -1,20 +1,14 @@
-import 'package:bikecourier_app/models/delivery.dart';
 import 'package:bikecourier_app/router.dart';
 import 'package:bikecourier_app/services/dialog_service.dart';
-import 'package:bikecourier_app/services/firestore_service.dart';
 import 'package:bikecourier_app/services/navigation_service.dart';
-import 'package:bikecourier_app/services/push_notification_service.dart';
 import 'package:bikecourier_app/views/startup_view.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:get_it/get_it.dart';
-import 'constants/route_names.dart';
 import 'locator.dart';
 import 'managers/dialog_manager.dart';
-import 'setup/login_view.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();

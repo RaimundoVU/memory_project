@@ -61,6 +61,17 @@ class DeliveryItem extends StatelessWidget {
           )
       );
     }
+    if (status == "OMW") {
+      return Chip(
+          backgroundColor: Color(0xFF4298F5),
+          padding: EdgeInsets.symmetric(vertical: 1.0, horizontal: 5.0),
+          label: Text(
+            "EN CAMINO",
+            style: TextStyle(color: Colors.white,),
+            textAlign: TextAlign.center,
+          )
+      );
+    }
     if (status == "CANCELED") {
       return Chip(
           backgroundColor: Color(0xFFff6666),

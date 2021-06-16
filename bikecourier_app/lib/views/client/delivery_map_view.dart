@@ -46,6 +46,7 @@ class _DeliveryMapViewState extends State<DeliveryMapView> {
   void initState() {
     super.initState();
     initializeMarkers(widget.delivery);
+    //_createPolylines(widget.delivery);
   }
 
   @override
@@ -56,7 +57,7 @@ class _DeliveryMapViewState extends State<DeliveryMapView> {
     super.dispose();
   }
 
-initializeMarkers(Delivery delivery) async {
+  initializeMarkers(Delivery delivery) async {
     marker = Marker(
         draggable: true,
         markerId: MarkerId("start"),
@@ -79,7 +80,7 @@ initializeMarkers(Delivery delivery) async {
             title: 'Ubicación de destino',
             snippet: 'Aquí termina la encomienda'));
     _markers.add(endMarker);
-    await _createPolylines(delivery);
+    _createPolylines(delivery);
   }
 
   void _createPolylines(Delivery delivery) async {
@@ -103,17 +104,19 @@ initializeMarkers(Delivery delivery) async {
     }
 
     // Defining an ID
-    PolylineId id = PolylineId('poly');
+    this.setState(() {
+      PolylineId id = PolylineId('poly');
 
-    // Initializing Polyline
-    Polyline polyline = Polyline(
-      polylineId: id,
-      color: Colors.red,
-      points: polylineCoordinates,
-      width: 3,
-    );
-    // Adding the polyline to the map
-    _polylines[id] = polyline;
+      // Initializing Polyline
+      Polyline polyline = Polyline(
+        polylineId: id,
+        color: Colors.red,
+        points: polylineCoordinates,
+        width: 3,
+      );
+      // Adding the polyline to the map
+      _polylines[id] = polyline;
+    });
   }
 
   void updateMarkerAndCircle(LocationData newLocalData) {
@@ -134,7 +137,8 @@ initializeMarkers(Delivery delivery) async {
 
   void getCurrentLocation() async {
     try {
-      var delivery = await _firestoreService.getDelivery(widget.delivery.documentId);
+      var delivery =
+          await _firestoreService.getDelivery(widget.delivery.documentId);
       var location = LocationData.fromMap(delivery.position());
       print("____________________");
       print(location);
@@ -147,11 +151,11 @@ initializeMarkers(Delivery delivery) async {
 
       _locationSubscription =
           _locationTracker.onLocationChanged.listen((newLocalData) {
-            // ESTA LINEA ES FUNDAMENTAL;
-            newLocalData = location;
-            print("__________________");
-            print(newLocalData);
-            print("__________________");
+        // ESTA LINEA ES FUNDAMENTAL;
+        newLocalData = location;
+        print("__________________");
+        print(newLocalData);
+        print("__________________");
         if (_controller != null) {
           _controller.animateCamera(CameraUpdate.newCameraPosition(
               new CameraPosition(

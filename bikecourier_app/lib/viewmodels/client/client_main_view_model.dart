@@ -21,6 +21,9 @@ class ClientMainViewModel extends BaseModel {
   List<Delivery> get deliveries => _deliveries;
 
   void listenToDeliveries(String uid) {
+    print('_________uid');
+    print(uid);
+    print("finuid_________");
     setBusy(true);
     _firestoreService.listenToDeliveryRealTime(uid).listen((deliveryData) {
       List<Delivery> updatedDeliveries = deliveryData;

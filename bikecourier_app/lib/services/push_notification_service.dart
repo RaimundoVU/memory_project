@@ -47,9 +47,5 @@ class PushNotificationService {
         print('Message also contained a notification: ${message.notification}');
       }
     });
-    print('________________________');
-    var token = await _firebaseMessaging.getToken();
-    print(token);
-    print('___________________');
   }
 }
